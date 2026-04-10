@@ -2,8 +2,11 @@
 Código de consumo de API de Whatsapp
 
 1) Variables de entorno en Render
+   
 VERIFY_TOKEN: cadena que eliges para verificar el webhook (también la pones en Meta).
-WHATSAPP_TOKEN: Access Token de la app en Meta (usa de larga duración para producción).
+
+WHATSAPP_TOKEN: Access Token de la app en Meta (usa de larga duración para producción)
+
 WHATSAPP_API_VERSION (opcional): por defecto v20.0.
 
 3) Deploy en Render (pasos rápidos)
