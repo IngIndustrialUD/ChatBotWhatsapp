@@ -12,7 +12,6 @@ def privacy():
 
 # ========= CONFIG =========
 #VERIFY_TOKEN   = os.getenv("VERIFY_TOKEN", 127e13f38859fc267bf1382aac65a0e8 )
-VERIFY_TOKEN   = os.getenv("VERIFY_TOKEN", "mi_token_de_verificacion")
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN","mi_token_de_verificacion")
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN", "REEMPLAZA_CON_TU_TOKEN")
 API_VERSION    = os.getenv("WHATSAPP_API_VERSION", "v20.0")
