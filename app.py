@@ -18,6 +18,13 @@ API_VERSION    = os.getenv("WHATSAPP_API_VERSION", "v20.0")
 # Logo (URL pública directa, p. ej. RAW de GitHub)
 LOGO_URL_UD = os.getenv("LOGO_URL_UD", "")
 
+
+#-------------------------------------------------------------PRUEBA------------------
+# Imagenes tales como infografías
+INFO_CANCELARAPLAZAR = os.getenv("INFO_CANCELARAPLAZAR", "")
+#-------------------------------------------------------------PRUEBA------------------
+
+
 # ========= HELPERS =========
 def graph_post(path: str, payload: dict):
     url = f"https://graph.facebook.com/{API_VERSION}/{path}"
@@ -324,8 +331,13 @@ def process_webhook(data):
             send_welcome(phone_number_id, from_wa)
             send_menu_buttons_all(phone_number_id, from_wa)
         elif body == "op_1":
+        #-------------------------------------------------------------PRUEBA------------------
+            send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
             send_text(phone_number_id, from_wa, R1)
             send_back_to_menu_button(phone_number_id, from_wa)
+        #-------------------------------------------------------------PRUEBA------------------
+            #send_text(phone_number_id, from_wa, R1)
+            #send_back_to_menu_button(phone_number_id, from_wa)
         elif body == "op_2":
             send_text(phone_number_id, from_wa, R2)
             send_back_to_menu_button(phone_number_id, from_wa)
