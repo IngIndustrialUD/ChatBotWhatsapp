@@ -24,8 +24,8 @@ LOGO_URL_UD = os.getenv("LOGO_URL_UD", "")
 INFO_CANCELARAPLAZAR = os.getenv("INFO_CANCELARAPLAZAR", "")
 INFO_CERTNOTAS = os.getenv("INFO_CERTNOTAS", "")
 INFO_DERECHOS = os.getenv("INFO_DERECHOS", "")
-INFO_CERTESTUDIOS1 = os.getenv("INFO_CERTESTUDIOS1", "")
-INFO_CERTESTUDIOS2 = os.getenv("INFO_CERTESTUDIOS2", "")
+INFO_CERTESTUDIOSU = os.getenv("INFO_CERTESTUDIOSU", "")
+INFO_CERTESTUDIOSD = os.getenv("INFO_CERTESTUDIOSD", "")
 
 #-------------------------------------------------------------PRUEBA------------------
 
