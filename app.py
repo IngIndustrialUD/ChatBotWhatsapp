@@ -22,6 +22,8 @@ LOGO_URL_UD = os.getenv("LOGO_URL_UD", "")
 #-------------------------------------------------------------PRUEBA------------------
 # Imagenes tales como infografías
 INFO_CANCELARAPLAZAR = os.getenv("INFO_CANCELARAPLAZAR", "")
+INFO_CERTNOTAS = os.getenv("CERTNOTAS", "")
+
 #-------------------------------------------------------------PRUEBA------------------
 
 
