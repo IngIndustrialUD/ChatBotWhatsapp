@@ -343,7 +343,8 @@ def process_webhook(data):
             "Ahí vamos, luchandola\n"
             "Muchas gracias por preguntar"
             )
-            send_text(phone_number_id, to, BIENVENIDA)
+            send_text(phone_number_id, from_wa , SALUDO)
+            send_menu_buttons_all(phone_number_id, from_wa)
     
         #-------------------------------------------------------------PRUEBA------------------
         
