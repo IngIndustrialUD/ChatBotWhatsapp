@@ -284,6 +284,15 @@ def verify():
         return challenge, 200
     return "forbidden", 403
 
+@app.get("/webhook")
+def verify():
+    mode = request.args.get("hub.mode")
+    token = request.args.get("hub.verify_token")
+    challenge = request.args.get("hub.challenge")
+    if mode == "subscribe" and token == VERIFY_TOKEN:
+        return challenge, 200
+    return "forbidden", 403
+
 @app.post("/webhook")
 def webhook():
     data = request.get_json(force=True, silent=True) or {}
@@ -379,8 +388,9 @@ def webhook():
 
     except Exception as e:
         print("Error procesando payload:", e)
-    return "ok", 200    #-------------------------------------------------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------PRUEBAS-----------------------------------------------------
+    return "ok", 200    
+#-------------------------------------------------------------------------------PRUEBAS-----------------------------------------------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
