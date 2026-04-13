@@ -287,6 +287,16 @@ def verify():
 @app.post("/webhook")
 def webhook():
     data = request.get_json(force=True, silent=True) or {}
+
+##-------------------------------------------------------------------------------PRUEBAS-----------------------------------------------------
+from threading import Thread
+    Thread(target=process_webhook, args=(data,)).start()
+    return "ok", 200
+
+def process_webhook(data):
+
+##--------------------------------------------------------------------------------PRUEBAS------------------------------------------------------
+    
     try:
         entry  = data["entry"][0]
         change = entry["changes"][0]["value"]
@@ -369,7 +379,7 @@ def webhook():
 
     except Exception as e:
         print("Error procesando payload:", e)
-    return "ok", 200
+    #return "ok", 200    #-------------------------------------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
