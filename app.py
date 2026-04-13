@@ -26,6 +26,7 @@ INFO_CERTNOTAS = os.getenv("INFO_CERTNOTAS", "")
 INFO_DERECHOS = os.getenv("INFO_DERECHOS", "")
 INFO_CERTESTUDIOSU = os.getenv("INFO_CERTESTUDIOSU", "")
 INFO_CERTESTUDIOSD = os.getenv("INFO_CERTESTUDIOSD", "")
+INFO_PASANTIA = os.getenv("INFO_PASANTIA", "")
 
 #-------------------------------------------------------------PRUEBA------------------
 
