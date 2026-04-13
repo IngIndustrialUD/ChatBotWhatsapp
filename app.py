@@ -73,7 +73,7 @@ def qr_link(data: str, size: str = "512x512") -> str:
 # ========= BIENVENIDA + MENÚ (3 tarjetas) =========
 BIENVENIDA = (
     "*Chat Institucional*\n"
-    "*Proyecto Curricular de Ingeniería Electrónica*\n"
+    "*Proyecto Curricular de Ingeniería Industrial*\n"
     "*Universidad Distrital Francisco José de Caldas*"
 )
 
