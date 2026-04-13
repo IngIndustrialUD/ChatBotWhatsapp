@@ -336,6 +336,17 @@ def process_webhook(data):
         if body in ("hola", "menu", "hi", "buenas"):
             send_welcome(phone_number_id, from_wa)
             send_menu_buttons_all(phone_number_id, from_wa)
+        #-------------------------------------------------------------PRUEBA------------------
+        elif body in ("¿Cómo estás?", "Cómo estás?", "¿cómo estás?", "cómo estás?", "cómo estas?", "¿como estás?", "como estás?", "como estas?", "¿como estas?"):
+            SALUDO = (
+            "*Nadie se había preocupado tanto por mi*\n"
+            "Ahí vamos, luchandola\n"
+            "Muchas gracias por preguntar"
+            )
+            send_text(phone_number_id, to, BIENVENIDA)
+    
+        #-------------------------------------------------------------PRUEBA------------------
+        
         elif body == "op_1":
         #-------------------------------------------------------------PRUEBA------------------
             send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
