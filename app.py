@@ -283,18 +283,31 @@ def verify():
         return challenge, 200
     return "forbidden", 403
 
+processed_ids = set()
+
 @app.post("/webhook")
 def webhook():
     data = request.get_json(force=True, silent=True) or {}
+    from threading import Thread
+    Thread(target=process_webhook, args=(data,)).start()
+    return "ok", 200
+
+def process_webhook(data):
     try:
         entry  = data["entry"][0]
         change = entry["changes"][0]["value"]
         phone_number_id = change["metadata"]["phone_number_id"]
         messages = change.get("messages", [])
         if not messages:
-            return "no messages", 200
+            return
 
         msg = messages[0]
+        msg_id = msg.get("id", "")
+        if msg_id in processed_ids:
+            print(f"Duplicado ignorado: {msg_id}")
+            return
+        processed_ids.add(msg_id)
+
         from_wa = msg["from"]
 
         body = ""
@@ -307,52 +320,34 @@ def webhook():
             elif inter.get("type") == "list_reply":
                 body = inter["list_reply"]["id"].strip().lower()
 
-        # ===== ROUTING =====
         if body in ("hola", "menu", "hi", "buenas"):
-            send_welcome(phone_number_id, from_wa)   # logo SOLO aquí
+            send_welcome(phone_number_id, from_wa)
             send_menu_buttons_all(phone_number_id, from_wa)
-
         elif body == "op_1":
-            # Cancelación/Aplazamiento (agregados paz y salvo y carta firmada)
             send_text(phone_number_id, from_wa, R1)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_2":
-            # Reintegro (SIN QR; agregado punto 5)
             send_text(phone_number_id, from_wa, R2)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_3":
-            # Asignaturas (agregados correos y formato)
             send_text(phone_number_id, from_wa, R3)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_4":
-            # Trabajo de grado (sin QR, enlaces ajustados)
             send_text(phone_number_id, from_wa, R4)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_5":
-            # Práctica empresarial (reemplaza RIUD)
             send_text(phone_number_id, from_wa, R5)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_6":
-            # Actas de consejo (contenido/URL específicos)
             send_text(phone_number_id, from_wa, R6)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_7":
-            # Constancias/Notas (sin QR extra)
             send_text(phone_number_id, from_wa, R7)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_8":
             send_text(phone_number_id, from_wa, R8)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         elif body == "op_9":
-            # Paz y salvos (sin QR; se envían solo enlaces en texto)
             texto_paz = (
                 "*Paz y salvos*\n\n"
                 f"• Laboratorios: {LINK_LABS}\n"
@@ -361,14 +356,12 @@ def webhook():
             )
             send_text(phone_number_id, from_wa, texto_paz)
             send_back_to_menu_button(phone_number_id, from_wa)
-
         else:
             send_welcome(phone_number_id, from_wa)
             send_menu_buttons_all(phone_number_id, from_wa)
 
     except Exception as e:
         print("Error procesando payload:", e)
-    return "ok", 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
