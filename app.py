@@ -149,7 +149,7 @@ def send_menu_principal(phone_number_id: str, to: str):
     """
 
     #DERIVADOS TRAMITES
-    def send_menu_tramites(phone_number_id: str, to: str):
+def send_menu_tramites(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
@@ -177,7 +177,7 @@ def send_menu_principal(phone_number_id: str, to: str):
     #FIN DERIVADOS TRAMITES
     
     #DERIVADOS INFORMACIÓN
-    def send_menu_informacion(phone_number_id: str, to: str):
+def send_menu_informacion(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
@@ -195,7 +195,7 @@ def send_menu_principal(phone_number_id: str, to: str):
     #FIN DERIVADOS INFORMACIÓN
     
     #DERIVADOS OTROS
-    def send_menu_otros(phone_number_id: str, to: str):
+def send_menu_otros(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
@@ -369,7 +369,7 @@ def process_webhook(data):
         # SALUDO INICIAL
         if body in ("hola", "menu", "hi", "buenas"):
             send_welcome(phone_number_id, from_wa)
-            send_menu_buttons_all(phone_number_id, from_wa)
+            send_menu_principal(phone_number_id, from_wa)
 
         
         elif body in ("¿Cómo estás?", "Cómo estás?", "¿cómo estás?", "cómo estás?", "cómo estas?", "¿como estás?", "como estás?", "como estas?", "¿como estas?", "¿Como estas?"):
@@ -403,7 +403,7 @@ def process_webhook(data):
             send_text(phone_number_id, from_wa, R_CERTNOTAS)
             send_back_tramites(phone_number_id, from_wa)
             
-         elif body == "op_certest":
+        elif body == "op_certest":
             send_image_with_caption(phone_number_id, from_wa, INFO_CERTESTUDIOSU, "")
             send_text(phone_number_id, from_wa, R_CERTEST_1)
             send_image_with_caption(phone_number_id, from_wa, INFO_CERTESTUDIOSD, "")
