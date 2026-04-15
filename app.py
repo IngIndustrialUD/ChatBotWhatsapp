@@ -7,29 +7,23 @@ app = Flask(__name__)
 
 @app.get("/privacy.html")
 def privacy():
-    # Sirve el archivo privacy.html que está en la misma carpeta de app.py
     return send_from_directory(".", "privacy.html")
 
 # ========= CONFIG =========
 VERIFY_TOKEN   = os.getenv("VERIFY_TOKEN", "mi_token_de_verificacion")
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN", "REEMPLAZA_CON_TU_TOKEN")
-API_VERSION    = os.getenv("WHATSAPP_API_VERSION", "v20.0")
+API_VERSION    = os.getenv("WHATSAPP_API_VERSION", "v22.0")
 
-# Logo (URL pública directa, p. ej. RAW de GitHub)
+# Logo
 LOGO_URL_UD = os.getenv("LOGO_URL_UD", "")
 
-
-#-------------------------------------------------------------PRUEBA------------------
-# Imagenes tales como infografías
+# Infografías
 INFO_CANCELARAPLAZAR = os.getenv("INFO_CANCELARAPLAZAR", "")
-INFO_CERTNOTAS = os.getenv("INFO_CERTNOTAS", "")
-INFO_DERECHOS = os.getenv("INFO_DERECHOS", "")
-INFO_CERTESTUDIOSU = os.getenv("INFO_CERTESTUDIOSU", "")
-INFO_CERTESTUDIOSD = os.getenv("INFO_CERTESTUDIOSD", "")
-INFO_PASANTIA = os.getenv("INFO_PASANTIA", "")
-
-#-------------------------------------------------------------PRUEBA------------------
-
+INFO_CERTNOTAS       = os.getenv("INFO_CERTNOTAS", "")
+INFO_DERECHOS        = os.getenv("INFO_DERECHOS", "")
+INFO_CERTESTUDIOSU   = os.getenv("INFO_CERTESTUDIOSU", "")
+INFO_CERTESTUDIOSD   = os.getenv("INFO_CERTESTUDIOSD", "")
+INFO_PASANTIA        = os.getenv("INFO_PASANTIA", "")
 
 # ========= HELPERS =========
 def graph_post(path: str, payload: dict):
@@ -61,7 +55,6 @@ def send_image_with_caption(phone_number_id: str, to: str, image_url: str, capti
         "image": {"link": image_url, "caption": caption}
     })
 
-
 def button_message(phone_number_id: str, to: str, header: dict, body_text: str, buttons: list, footer_text: str = ""):
     payload = {
         "messaging_product": "whatsapp",
@@ -80,10 +73,9 @@ def button_message(phone_number_id: str, to: str, header: dict, body_text: str, 
     return graph_post(f"{phone_number_id}/messages", payload)
 
 def qr_link(data: str, size: str = "512x512") -> str:
-    # Se conserva por compatibilidad, pero se dejó de usar donde el documento pide "sin QR"
     return f"https://api.qrserver.com/v1/create-qr-code/?size={size}&data={quote_plus(data)}"
 
-# ========= BIENVENIDA + MENÚ (3 tarjetas) =========
+# ========= BIENVENIDA =========
 BIENVENIDA = (
     "*Chat Institucional*\n"
     "*Proyecto Curricular de Ingeniería Industrial*\n"
@@ -91,241 +83,193 @@ BIENVENIDA = (
 )
 
 def send_welcome(phone_number_id: str, to: str):
-    # Logo SOLO aquí (no en el menú)
     if LOGO_URL_UD:
-        send_image_with_caption(phone_number_id, to, LOGO_URL_UD,BIENVENIDA)
+        send_image_with_caption(phone_number_id, to, LOGO_URL_UD, BIENVENIDA)
     else:
         send_text(phone_number_id, to, BIENVENIDA)
 
-#--------------------------------------------------PRUEBA------------------------------------
-# Quiero cambiar las funciones de los botones, que el volver al menú principal vuelva al 
-# menú principal. Pero que además de eso cada back button de cada menú posible devuelva 
-# al menú inmediatamente anterior y de la opción del menú principal
-#--------------------------------------------------PRUEBA------------------------------------
+# ========= BOTONES DE NAVEGACIÓN =========
+def send_back_tramites(phone_number_id: str, to: str):
+    """Botón doble: volver a Trámites O ir al Menú principal"""
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_tramites", "title": "Volver a Trámites"}},
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
+        ],
+        footer_text=""
+    )
 
+def send_back_to_menu_principal(phone_number_id: str, to: str):
+    """Botón simple: solo volver al menú principal"""
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Desea volver al menú principal?",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
+        ],
+        footer_text=""
+    )
 
-#--------------------------------------------------PRUEBA------------------------------------
+# ========= MENÚ PRINCIPAL =========
 def send_menu_principal(phone_number_id: str, to: str):
-
-    # Menú principal
     button_message(
         phone_number_id, to,
         header=None,
         body_text="*Menú Principal*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "menu_tramites", "title": "Trámites"}},
-            {"type": "reply", "reply": {"id": "menu_info", "title": "Información"}},
-            {"type": "reply", "reply": {"id": "menu_otros", "title": "Otros"}}
+            {"type": "reply", "reply": {"id": "menu_tramites",   "title": "Trámites"}},
+            {"type": "reply", "reply": {"id": "menu_informacion","title": "Información"}},
+            {"type": "reply", "reply": {"id": "menu_otros",      "title": "Otros"}}
         ],
         footer_text=""
     )
 
-
-def send_back_to_tramites(phone_number_id: str, to: str):
-    return button_message(
-        phone_number_id, to,
-        header=None,
-        body_text="¿Desea volver al menú tramites?",
-        buttons=[{"type": "reply", "reply": {"id": "menu", "title": "Menú Trámites"}}],
-        footer_text=""
-    )
-
-
-    
-
-    
-
-    """
-    TODOS ESTOS MENUS DEBEN TENER UN BACK BUTTON QUE REGRESE AL MENÚ PRINCIPAL (1ER ORDEN)
-    """
-
-    #DERIVADOS TRAMITES
-    def send_menu_tramites_1(phone_number_id: str, to: str):
+# ========= SUBMENÚ TRÁMITES =========
+def send_menu_tramites(phone_number_id: str, to: str):
+    # Tarjeta 1 de trámites
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Trámites ° 1*\nSeleccione una opción:",
+        body_text="*Trámites (1/2)*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_derechos", "title": "Derechos pecuniarios"}},
+            {"type": "reply", "reply": {"id": "op_derechos",  "title": "Derechos pecuniarios"}},
             {"type": "reply", "reply": {"id": "op_certnotas", "title": "Certificado de notas"}},
-            {"type": "reply", "reply": {"id": "op_certest", "title": "Certificados de estudio"}}
+            {"type": "reply", "reply": {"id": "op_certest",   "title": "Cert. de estudio"}}
         ],
         footer_text=""
     )
-    
-    def send_menu_tramites_2(phone_number_id: str, to: str):
+    # Tarjeta 2 de trámites
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Trámites ° 2*\nSeleccione una opción:",
+        body_text="*Trámites (2/2)*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_practica", "title": "Práctica empresarial"}},
-            {"type": "reply", "reply": {"id": "op_contpro", "title": "Contenidos programáticos"}},
-            {"type": "reply", "reply": {"id": "op_pendiente", "title": "Pendiente"}}
+            {"type": "reply", "reply": {"id": "op_practica",  "title": "Práctica empresarial"}},
+            {"type": "reply", "reply": {"id": "op_contpro",   "title": "Contenidos programát."}},
+            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
         ],
         footer_text=""
     )
-    
-    #FIN DERIVADOS TRAMITES
 
-    #DERIVADOS INFORMACIÓN
-
-    #FIN DERIVADOS INFORMACIÓN
-
-    #DERIVADOS OTROS
-
-    #FIN DERIVADOS OTROS
-#--------------------------------------------------PRUEBA------------------------------------
-
-def send_back_to_menu_button(phone_number_id: str, to: str):
-    return button_message(
+# ========= SUBMENÚ INFORMACIÓN (por completar) =========
+def send_menu_informacion(phone_number_id: str, to: str):
+    button_message(
         phone_number_id, to,
         header=None,
-        body_text="¿Desea volver al menú?",
-        buttons=[{"type": "reply", "reply": {"id": "menu", "title": "Menú principal"}}],
+        body_text="*Información*\nSeleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_info_1",    "title": "Opción 1"}},
+            {"type": "reply", "reply": {"id": "op_info_2",    "title": "Opción 2"}},
+            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
+        ],
         footer_text=""
     )
 
-# ========= LINKS (texto plano; sin QR donde se solicita) =========
+# ========= SUBMENÚ OTROS (por completar) =========
+def send_menu_otros(phone_number_id: str, to: str):
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="*Otros*\nSeleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_otros_1",   "title": "Opción 1"}},
+            {"type": "reply", "reply": {"id": "op_otros_2",   "title": "Opción 2"}},
+            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
+        ],
+        footer_text=""
+    )
+
+# ========= LINKS =========
 LINK_RIUD       = "https://repositorio.udistrital.edu.co"
-LINK_LABS       = ("https://is.gd/LK3evv")
+LINK_LABS       = "https://is.gd/LK3evv"
 LINK_BIBLIO     = "https://bibliotecas.udistrital.edu.co/servicios/paz_y_salvos"
 LINK_BIENESTAR  = "https://bienestar.udistrital.edu.co/node/634"
-
-# Reintegro (Admisiones)
 LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
+LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
+TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
+TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
+TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
+TG_BANNER       = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/EQRfFbhqDKlPsIdKzjKL_HsBkYzq5JBC7PBkqlxDFU0TFQ?e=MXNNwn"
+RIUD_GUIA       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf"
+PE_FORMATO_SOLIC= "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EeGl6EoBDpJNuxKg6PqYJrwBZhx6TYivnL7uRWKco_D_LA?e=ig9DQu"
+PE_CARTA_TUTOR  = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EXp2Pl4gjFBDoIksXo_7_dYBwh8z_V6KO4D466Jr9A6biw?e=DboPOo"
+PE_INFORME      = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/Ea6rADiXua9FjuiE6B0ViGsBJ-Kc217eO1-9e-4LpS0hMw?e=IJ27L3"
 
-# Constancias — Derechos pecuniarios
-LINK_DERECHOS   = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/IQBjnQKmTrmqQalzP7OjGy2dAXh42bB_YkTClgZCxsUDEQc?e=vJUu7k"
-
-# Trabajo de grado — (se conserva banner; se ajustan formularios y textos)
-TG_FORM_1   = "https://forms.office.com/r/8ZkpzjTYvX"   # Acta sustentación (3 días antes)
-TG_FORM_3   = "https://forms.office.com/r/0r0hjX0Bh4"   # Permiso RIUD (tras inscripción)
-TG_FORM_4   = "https://forms.office.com/r/P81G4Fqt0A"   # Práctica empresarial (form base)
-TG_BANNER   = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/EQRfFbhqDKlPsIdKzjKL_HsBkYzq5JBC7PBkqlxDFU0TFQ?e=MXNNwn"
-RIUD_GUIA   = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf"
-
-# Práctica empresarial — links de soporte
-PE_FORMATO_SOLIC = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EeGl6EoBDpJNuxKg6PqYJrwBZhx6TYivnL7uRWKco_D_LA?e=ig9DQu"
-PE_CARTA_TUTOR   = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EXp2Pl4gjFBDoIksXo_7_dYBwh8z_V6KO4D466Jr9A6biw?e=DboPOo"
-PE_INFORME       = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/Ea6rADiXua9FjuiE6B0ViGsBJ-Kc217eO1-9e-4LpS0hMw?e=IJ27L3"
-
-# ========= RESPUESTAS (formales, ajustadas al documento) =========
-R1 = (
-    "*Cancelación o Aplazamiento*\n\n"
-    "*Aplazamiento (Semanas 1–2):* Enviar solicitud a *ingelectronica@udistrital.edu.co*, "
-    "adjuntando *carta de motivos firmada* y paz y salvo de *Laboratorios, Bienestar y Biblioteca*.\n"
-    f"• Laboratorios: {LINK_LABS}\n"
-    f"• Bienestar: {LINK_BIENESTAR}\n"
-    f"• Biblioteca: {LINK_BIBLIO}\n\n"
-    "*Cancelación (Semanas 3–8):* Enviar solicitud a *secing@udistrital.edu.co* con los mismos soportes "
-    "(carta firmada y paz y salvos).\n\n"
-    "🔁 *Ambos procesos permiten regresar maximo después de un año.*\n"
-    "⚠️ Si no haces el trámite, el sistema puede marcar *abandono*.\n\n"
-    "📌 *Nota:* la decisión final corresponde al *Consejo de Facultad*."
+# ========= RESPUESTAS =========
+R_DERECHOS = (
+    "*Derechos pecuniarios*\n\n"
+    "Ingresa al siguiente enlace para conocer el paso a paso para que solicites tus documentos "
+    "sin errores desde el Sistema de Gestión Académica\n"
+    f"Enlace: *{LINK_DERECHOS}*\n\n"
+    "Dentro de los derechos pecuniarios encontrarás los siguientes servicios disponibles:\n"
+    "• Constancia de estudio\n"
+    "• Constancia de estudio especial\n"
+    "• Certificado de notas\n"
+    "⚠️ Revisa muy bien el procedimiento para evitar complicaciones."
 )
 
-R2 = (
-    "*Reintegro*\n\n"
-    "1) Debes estar pendiente de la página de *Admisiones*:\n"
-    f"👉 {LINK_ADMISIONES}\n"
-    "2) Allí se anuncia cuándo está habilitado el proceso.\n"
-    "3) Tendrás que comprar un *PIN de reintegro*, usualmente disponible *mes y medio* antes de finalizar el semestre en curso.\n"
-    "4) La publicación del proceso normalmente se hace *dos meses* antes de que termine el semestre, para aplicar al siguiente.\n"
-    "5) Una vez compres el PIN, se procederá con el *estudio de reintegro*. De ser aprobado, debes acercarte a la *Coordinación* "
-    "o a la *Secretaría Académica* para la generación del recibo de matrícula."
-)
-# (Sin QR de Admisiones; requerido por el documento)
-
-R3 = (
-    "*Inscripción / Cancelación de asignaturas*\n\n"
-    "📅 *Según el cronograma académico*:\n\n"
-    "✅ *Primera semana del semestre:*\n"
-    "• Puedes hacer *cancelaciones o inscripciones* directamente ante el *Proyecto Curricular*.\n\n"
-     "📧 *Adiciones/Cancelaciones por correo:* envía a *ingelectronica@udistrital.edu.co* el *formato de adiciones y cancelación*.\n"
-    "🕒 *Desde la semana 2 en adelante:*\n"
-    "• El trámite debe hacerse ante el *Consejo de Facultad*.\n\n"
-    "📌 Es muy importante estar pendiente del *cronograma académico oficial*, donde están las fechas exactas.\n\n"
-    "📧 *Enviar a Secretaría Académica (carta de cancelacion con motivo, debe ir firmada):* *secing@udistrital.edu.co*, *asecing@udistrital.edu.co*, *sec-secing@udistrital.edu.co*."
+R_CERTNOTAS = (
+    "👉 *Cómo generar tu certificado de notas paso a paso*\n\n"
+    "*Paso 1:* Ingresa a SGA con tus datos personales.\n"
+    "*Paso 2:* Menú superior izquierdo → Servicios → Derechos pecuniarios → Generar recibo\n"
+    "*Paso 3:* En la lista desplegable elige *"Certificado de Notas"* y haz clic en *Aceptar*\n\n"
+    "*IMPORTANTE:* Verifica que tus datos personales estén correctos antes de generar el recibo\n\n"
+    "*Paso 4:* Luego de haber pagado en línea con PSE, podrás descargar en *"Recibos generados"* el certificado\n\n"
+    "Por último, si deseas incluir información adicional necesaria, envía el PDF del certificado al correo: "
+    "*sec-seing@udistrital.edu.co*\n"
+    "El proceso puede tardar entre 1 y 3 días hábiles."
 )
 
-R4 = (
-    "*Trabajo de grado*\n\n"
-    "📥 *Toda la información está en la página del Proyecto de Ingeniería Electrónica.*\n"
-    f"📄 *Banner* (pasos y requisitos): {TG_BANNER}\n\n"
-    "🗓️ *Acta de sustentación:* se solicita con *3 días de anticipación* en el siguiente enlace:\n"
-    f"• {TG_FORM_1}\n\n"
-    "🗃️ *Permiso para RIUD:* diligencia este formulario *una vez inscrito en RIUD*:\n"
-    f"• {TG_FORM_3}\n"
-    f"• Guía RIUD (manual): {RIUD_GUIA}\n\n"
-   
+R_CERTEST_1 = (
+    "*Cómo generar tu certificado de estudios normal. Paso a paso:*\n\n"
+    "*Paso 1:* Entra al portal institucional con tu *usuario*\n"
+    "*Paso 2:* En el menú izquierdo: Servicios → Derechos pecuniarios → Generar recibo\n"
+    "*Paso 3:* En el campo Derecho pecuniario, elige *"Constancias de estudio"* y haz clic en Aceptar\n"
+    "Nota: Una vez hecho esto, se generará el recibo de pago automáticamente\n"
+    "*Paso 4:* Elige pago en línea PSE → Selecciona tu banco → Completa la transacción\n"
 )
-# (Sin QR en esta sección; requerido por el documento. Se eliminaron TG_FORM_2 y TG_FORM_4 de la lista de TG)
 
-R5 = (
+R_CERTEST_2 = (
+    "*Certificado de estudios especial. Paso a paso:*\n\n"
+    "*Paso 1:* Primero genera y paga el recibo como en el proceso de Certificado de estudios normal.\n"
+    "*Paso 2:* Envía un correo a: *secingindustrial@udistrital.edu.co* incluyendo:\n"
+    "• Nombre completo\n"
+    "• Código estudiantil\n"
+    "• Tipo y número de documento\n"
+    "• Ciudad de expedición\n"
+    "• Número de contacto\n\n"
+    "Nota: Especifica el tipo de *certificado*\n\n"
+    "*Paso 3:* La constancia será enviada al correo del solicitante dentro de los "
+    "*tres días hábiles siguientes*."
+)
+
+R_PRACTICA = (
     "*Práctica empresarial*\n\n"
     "Las solicitudes se realizan mediante el formulario:\n"
     f"• {TG_FORM_4}\n\n"
     "Procedimiento:\n"
-    "1) Solicitar *carta de presentación* (en el mismo formulario) y anexar el *formato*:\n"
+    "1) Solicitar *carta de presentación* (en el mismo formulario) y anexar el formato:\n"
     f"   {PE_FORMATO_SOLIC}\n"
     "2) La empresa remite las *funciones*.\n"
     "3) La *Coordinación* responde con la *viabilidad* de las funciones.\n"
-    "4) Formaliza la *inscripción* (por el mismo formulario) adjuntando:\n"
-    "   • Correo de *Carta de presentación*\n"
-    "   • Correo de *Carta de Viabilidad*\n"
-    "   • *Contrato*\n"
-    "   • *ARL*\n"
-    f"   • *Carta del tutor docente de planta*: {PE_CARTA_TUTOR}\n\n"
-    f"📄 *Formato de informe de práctica:* {PE_INFORME}"
-)
-
-R6 = (
-    "*Actas de consejo*\n\n"
-    "Las *actas del Consejo de Carrera* se encuentran en:\n"
-    "https://udistritaleduco-my.sharepoint.com/:f:/g/personal/ingelectronica_udistrital_edu_co/EsujtjzdgqRCp4ASFiJnFd8BNDaQsDr9hECkqVjtWPzBOA?e=cZGo8t"
-)
-# (Contenido y título ajustados; antes era “Actas de sustentación”)
-
-R7 = (
-    "*Constancias de estudio / Certificados de notas*\n\n"
-    "1) 📄 Consulta primero los *valores* en el PDF de *Derechos pecuniarios*:\n"
-    "👉 {LINK_DERECHOS}\n\n"
-    "2) 💳 Realiza el *pago*: por *PSE* si tienes *Cóndor* activo, o por *banco* si no tienes Cóndor activo.\n\n"
-    "3) 📧 Luego envía un *correo* a:\n"
-        "3.1) 📧 Si es un certificado de Notas *enviar correo* a:\n"
-             "*sec-secing@udistrital.edu.co*\n\n"
-        "3.2) 📧 Si es un certificado de Contenidos *enviar correo* a:\n"
-             "*secingelectronica@udistrital.edu.co*\n\n"
-        "3.3) 📧 Si es una constancia de estudio especial *enviar correo* a:\n"
-             "*secingelectronica@udistrital.edu.co*\n\n"
-        "3.4) 📧 Si es un certificado de ranking *enviar correo* a:\n"
-             "*ingelectronica@udistrital.edu.co*\n\n"
-        "3.5) 📧 Si es una constancia de estudio especial *se genera automaticamente* a:\n"
-             "*En la misma seccion donde lo pago en el SGA*\n\n"
-    "*Incluye:*\n"
-    "• Nombre completo\n"
-    "• Número de documento\n"
-    "• Código estudiantil\n"
-    "• Programa académico\n"
-)
-# (Sin enviar QR adicional aquí; el link ya está en el texto)
-
-R8 = (
-    "*Modelo de correo al programa*\n\n"
-    "*Asunto:* Solicitud de información sobre trámite académico\n\n"
-    "Respetados(as) señores(as),\n\n"
-    "Cordial saludo. Me permito solicitar información sobre [describa su caso]. "
-    "Quedo atento(a) a los requisitos adicionales que sean necesarios.\n\n"
-    "Atentamente,\n[Nombre completo]\n[Documento]\n[Código]\n[Programa: Ingeniería Electrónica]\nCorreo: [su correo]\nTel.: [su número]\n\n"
-    "*Destinatario sugerido:* *ingelectronica@udistrital.edu.co*"
+    "4) Formaliza la *inscripción* adjuntando:\n"
+    "   • Correo de Carta de presentación\n"
+    "   • Correo de Carta de Viabilidad\n"
+    "   • Contrato\n"
+    "   • ARL\n"
+    f"   • Carta del tutor docente de planta: {PE_CARTA_TUTOR}\n\n"
+    f"📄 Formato de informe de práctica: {PE_INFORME}"
 )
 
 # ========= WEBHOOKS =========
 @app.get("/webhook")
 def verify():
-    mode = request.args.get("hub.mode")
-    token = request.args.get("hub.verify_token")
+    mode      = request.args.get("hub.mode")
+    token     = request.args.get("hub.verify_token")
     challenge = request.args.get("hub.challenge")
     if mode == "subscribe" and token == VERIFY_TOKEN:
         return challenge, 200
@@ -342,14 +286,14 @@ def webhook():
 
 def process_webhook(data):
     try:
-        entry  = data["entry"][0]
-        change = entry["changes"][0]["value"]
+        entry           = data["entry"][0]
+        change          = entry["changes"][0]["value"]
         phone_number_id = change["metadata"]["phone_number_id"]
-        messages = change.get("messages", [])
+        messages        = change.get("messages", [])
         if not messages:
             return
 
-        msg = messages[0]
+        msg    = messages[0]
         msg_id = msg.get("id", "")
         if msg_id in processed_ids:
             print(f"Duplicado ignorado: {msg_id}")
@@ -368,95 +312,82 @@ def process_webhook(data):
             elif inter.get("type") == "list_reply":
                 body = inter["list_reply"]["id"].strip().lower()
 
-        if body in ("hola", "menu", "hi", "buenas"):
+        # ===== SALUDO INICIAL =====
+        if body in ("hola", "menu", "hi", "buenas", "menu_principal"):
             send_welcome(phone_number_id, from_wa)
-            send_menu_buttons_all(phone_number_id, from_wa)
-    
-        elif body in ("¿Cómo estás?", "Cómo estás?", "¿cómo estás?", "cómo estás?", "cómo estas?", "¿como estás?", "como estás?", "como estas?", "¿como estas?", "¿Como estas?"):
-            SALUDO = (
-            "*Nadie se había preocupado tanto por mi*\n"
-            "Ahí vamos, luchandola\n"
-            "Muchas gracias por preguntar"
-            )
-            send_text(phone_number_id, from_wa , SALUDO)
-            send_back_to_menu_button(phone_number_id, from_wa)
-    
-
-
-
-
-        #-------------------------------------------------------------PRUEBA------------------
-        elif body == "menu_tramites":
-            send_menu_tramites_1(phone_number_id, from_wa)
-            send_menu_tramites_2(phone_number_id, from_wa)
             send_menu_principal(phone_number_id, from_wa)
-            
+
+        # ===== EASTER EGG =====
+        elif body in ("como estas", "cómo estás", "¿cómo estás?", "como estás",
+                      "cómo estas", "¿como estas?", "¿como estás?"):
+            SALUDO = (
+                "*Nadie se había preocupado tanto por mí* 🥹\n"
+                "Ahí vamos, luchandola\n"
+                "Muchas gracias por preguntar"
+            )
+            send_text(phone_number_id, from_wa, SALUDO)
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        # ===== MENÚS PRINCIPALES =====
+        elif body == "menu_tramites":
+            send_menu_tramites(phone_number_id, from_wa)
+
+        elif body == "menu_informacion":
+            send_menu_informacion(phone_number_id, from_wa)
+
+        elif body == "menu_otros":
+            send_menu_otros(phone_number_id, from_wa)
+
+        # ===== OPCIONES DE TRÁMITES =====
         elif body == "op_derechos":
             send_image_with_caption(phone_number_id, from_wa, INFO_DERECHOS, "")
-            send_text(phone_number_id, from_wa, R1)
-            send_back_to_tramites(phone_number_id, from_wa)
-            
-        #-------------------------------------------------------------PRUEBA------------------
+            send_text(phone_number_id, from_wa, R_DERECHOS)
+            send_back_tramites(phone_number_id, from_wa)
 
+        elif body == "op_certnotas":
+            send_image_with_caption(phone_number_id, from_wa, INFO_CERTNOTAS, "")
+            send_text(phone_number_id, from_wa, R_CERTNOTAS)
+            send_back_tramites(phone_number_id, from_wa)
 
+        elif body == "op_certest":
+            send_image_with_caption(phone_number_id, from_wa, INFO_CERTESTUDIOSU, "")
+            send_text(phone_number_id, from_wa, R_CERTEST_1)
+            send_image_with_caption(phone_number_id, from_wa, INFO_CERTESTUDIOSD, "")
+            send_text(phone_number_id, from_wa, R_CERTEST_2)
+            send_back_tramites(phone_number_id, from_wa)
 
-        
-        """elif body == "op_1": """
-        #-------------------------------------------------------------PRUEBA------------------
-            """
-            send_text(phone_number_id, from_wa, R1)
-            send_back_to_menu_button(phone_number_id, from_wa)
-            """
-            
-            
-            
-            """ Mensaje modelo con infografía y respuesta
-            send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
-            send_text(phone_number_id, from_wa, R1)
-            send_back_to_menu_button(phone_number_id, from_wa)
-            """
-        #-------------------------------------------------------------PRUEBA------------------
-        """
-        elif body == "op_2":
-            send_text(phone_number_id, from_wa, R2)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_3":
-            send_text(phone_number_id, from_wa, R3)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_4":
-            send_text(phone_number_id, from_wa, R4)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_5":
-            send_text(phone_number_id, from_wa, R5)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_6":
-            send_text(phone_number_id, from_wa, R6)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_7":
-            send_text(phone_number_id, from_wa, R7)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_8":
-            send_text(phone_number_id, from_wa, R8)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        elif body == "op_9":
-            texto_paz = (
-                "*Paz y salvos*\n\n"
-                f"• Laboratorios: {LINK_LABS}\n"
-                f"• Biblioteca: {LINK_BIBLIO}\n"
-                f"• Bienestar: {LINK_BIENESTAR}"
-            )
-            send_text(phone_number_id, from_wa, texto_paz)
-            send_back_to_menu_button(phone_number_id, from_wa)
-        """
+        elif body == "op_practica":
+            send_image_with_caption(phone_number_id, from_wa, INFO_PASANTIA, "")
+            send_text(phone_number_id, from_wa, R_PRACTICA)
+            send_back_tramites(phone_number_id, from_wa)
 
-        elif body =="menu":
-            send_welcome(phone_numer_id, from_wa)
-            send_menu_principal(phone_number_id, from_wa)
-        """
+        elif body == "op_contpro":
+            send_text(phone_number_id, from_wa, "⚙️ Contenidos programáticos — próximamente.")
+            send_back_tramites(phone_number_id, from_wa)
+
+        # ===== OPCIONES DE INFORMACIÓN (por completar) =====
+        elif body == "op_info_1":
+            send_text(phone_number_id, from_wa, "Información opción 1 — por completar.")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_info_2":
+            send_text(phone_number_id, from_wa, "Información opción 2 — por completar.")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        # ===== OPCIONES DE OTROS (por completar) =====
+        elif body == "op_otros_1":
+            send_text(phone_number_id, from_wa, "Otros opción 1 — por completar.")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_otros_2":
+            send_text(phone_number_id, from_wa, "Otros opción 2 — por completar.")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        # ===== DEFAULT =====
         else:
             send_welcome(phone_number_id, from_wa)
             send_menu_principal(phone_number_id, from_wa)
-        """
+
     except Exception as e:
         print("Error procesando payload:", e)
 
