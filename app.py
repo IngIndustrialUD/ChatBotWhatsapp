@@ -97,57 +97,92 @@ def send_welcome(phone_number_id: str, to: str):
     else:
         send_text(phone_number_id, to, BIENVENIDA)
 
-def send_menu_buttons_all(phone_number_id: str, to: str):
-    """
-    Envía 3 mensajes tipo botón (3 opciones por mensaje = 9 en total).
-    Sin logo ni header en las tarjetas (solo en el saludo).
-    *** NO se elimina ningún menú, por solicitud del usuario. ***
-    """
-    # Tarjeta TRÁMITES (1–3)
+#--------------------------------------------------PRUEBA------------------------------------
+# Quiero cambiar las funciones de los botones, que el volver al menú principal vuelva al 
+# menú principal. Pero que además de eso cada back button de cada menú posible devuelva 
+# al menú inmediatamente anterior y de la opción del menú principal
+#--------------------------------------------------PRUEBA------------------------------------
+
+
+#--------------------------------------------------PRUEBA------------------------------------
+def send_menu_principal(phone_number_id: str, to: str):
+
+    # Menú principal
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Menú · Trámites*\nSeleccione una opción:",
+        body_text="*Menú Principal*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_1", "title": "Cancelación/Aplaz."}},
-            {"type": "reply", "reply": {"id": "op_2", "title": "Reintegro"}},
-            {"type": "reply", "reply": {"id": "op_3", "title": "Inscr./Cancel. Asig."}}
+            {"type": "reply", "reply": {"id": "menu_tramites", "title": "Trámites"}},
+            {"type": "reply", "reply": {"id": "menu_info", "title": "Información"}},
+            {"type": "reply", "reply": {"id": "menu_otros", "title": "Otros"}}
         ],
         footer_text=""
     )
 
-    # Tarjeta (renombrada) TRABAJO DE GRADO (4–6)
-    button_message(
+
+def send_back_to_tramites(phone_number_id: str, to: str):
+    return button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Menú · Trabajo de grado*\nSeleccione una opción:",
-        buttons=[
-            {"type": "reply", "reply": {"id": "op_4", "title": "Trabajo de grado"}},
-            {"type": "reply", "reply": {"id": "op_5", "title": "Práctica empresarial"}},  # reemplaza RIUD
-            {"type": "reply", "reply": {"id": "op_6", "title": "Actas de consejo"}}       # renombrado
-        ],
+        body_text="¿Desea volver al menú tramites?",
+        buttons=[{"type": "reply", "reply": {"id": "menu", "title": "Menú Trámites"}}],
         footer_text=""
     )
 
-    # Tarjeta OTROS (7–9)
+
+    
+
+    
+
+    """
+    TODOS ESTOS MENUS DEBEN TENER UN BACK BUTTON QUE REGRESE AL MENÚ PRINCIPAL (1ER ORDEN)
+    """
+
+    #DERIVADOS TRAMITES
+    def send_menu_tramites_1(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Menú · Otros*\nSeleccione una opción:",
+        body_text="*Trámites ° 1*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_7", "title": "Constancias/Notas"}},
-            {"type": "reply", "reply": {"id": "op_8", "title": "Correo modelo"}},
-            {"type": "reply", "reply": {"id": "op_9", "title": "Paz y salvos"}}
+            {"type": "reply", "reply": {"id": "op_derechos", "title": "Derechos pecuniarios"}},
+            {"type": "reply", "reply": {"id": "op_certnotas", "title": "Certificado de notas"}},
+            {"type": "reply", "reply": {"id": "op_certest", "title": "Certificados de estudio"}}
         ],
         footer_text=""
     )
+    
+    def send_menu_tramites_2(phone_number_id: str, to: str):
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="*Trámites ° 2*\nSeleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_practica", "title": "Práctica empresarial"}},
+            {"type": "reply", "reply": {"id": "op_contpro", "title": "Contenidos programáticos"}},
+            {"type": "reply", "reply": {"id": "op_pendiente", "title": "Pendiente"}}
+        ],
+        footer_text=""
+    )
+    
+    #FIN DERIVADOS TRAMITES
+
+    #DERIVADOS INFORMACIÓN
+
+    #FIN DERIVADOS INFORMACIÓN
+
+    #DERIVADOS OTROS
+
+    #FIN DERIVADOS OTROS
+#--------------------------------------------------PRUEBA------------------------------------
 
 def send_back_to_menu_button(phone_number_id: str, to: str):
     return button_message(
         phone_number_id, to,
         header=None,
         body_text="¿Desea volver al menú?",
-        buttons=[{"type": "reply", "reply": {"id": "menu", "title": "Menú"}}],
+        buttons=[{"type": "reply", "reply": {"id": "menu", "title": "Menú principal"}}],
         footer_text=""
     )
 
@@ -336,7 +371,7 @@ def process_webhook(data):
         if body in ("hola", "menu", "hi", "buenas"):
             send_welcome(phone_number_id, from_wa)
             send_menu_buttons_all(phone_number_id, from_wa)
-        #-------------------------------------------------------------PRUEBA------------------
+    
         elif body in ("¿Cómo estás?", "Cómo estás?", "¿cómo estás?", "cómo estás?", "cómo estas?", "¿como estás?", "como estás?", "como estas?", "¿como estas?", "¿Como estas?"):
             SALUDO = (
             "*Nadie se había preocupado tanto por mi*\n"
@@ -346,16 +381,42 @@ def process_webhook(data):
             send_text(phone_number_id, from_wa , SALUDO)
             send_back_to_menu_button(phone_number_id, from_wa)
     
+
+
+
+
         #-------------------------------------------------------------PRUEBA------------------
+        elif body == "menu_tramites":
+            send_menu_tramites_1(phone_number_id, from_wa)
+            send_menu_tramites_2(phone_number_id, from_wa)
+            send_menu_principal(phone_number_id, from_wa)
+            
+        elif body == "op_derechos":
+            send_image_with_caption(phone_number_id, from_wa, INFO_DERECHOS, "")
+            send_text(phone_number_id, from_wa, R1)
+            send_back_to_tramites(phone_number_id, from_wa)
+            
+        #-------------------------------------------------------------PRUEBA------------------
+
+
+
         
-        elif body == "op_1":
+        """elif body == "op_1": """
         #-------------------------------------------------------------PRUEBA------------------
+            """
+            send_text(phone_number_id, from_wa, R1)
+            send_back_to_menu_button(phone_number_id, from_wa)
+            """
+            
+            
+            
+            """ Mensaje modelo con infografía y respuesta
             send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
             send_text(phone_number_id, from_wa, R1)
             send_back_to_menu_button(phone_number_id, from_wa)
+            """
         #-------------------------------------------------------------PRUEBA------------------
-            #send_text(phone_number_id, from_wa, R1)
-            #send_back_to_menu_button(phone_number_id, from_wa)
+        """
         elif body == "op_2":
             send_text(phone_number_id, from_wa, R2)
             send_back_to_menu_button(phone_number_id, from_wa)
@@ -386,10 +447,16 @@ def process_webhook(data):
             )
             send_text(phone_number_id, from_wa, texto_paz)
             send_back_to_menu_button(phone_number_id, from_wa)
+        """
+
+        elif body =="menu":
+            send_welcome(phone_numer_id, from_wa)
+            send_menu_principal(phone_number_id, from_wa)
+        """
         else:
             send_welcome(phone_number_id, from_wa)
-            send_menu_buttons_all(phone_number_id, from_wa)
-
+            send_menu_principal(phone_number_id, from_wa)
+        """
     except Exception as e:
         print("Error procesando payload:", e)
 
