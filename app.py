@@ -149,8 +149,8 @@ def send_menu_tramites(phone_number_id: str, to: str):
         body_text="*Trámites (2/2)*\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "op_practica",  "title": "Práctica empresarial"}},
-            {"type": "reply", "reply": {"id": "op_contpro",   "title": "Contenidos programát."}},
-            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
+            {"type": "reply", "reply": {"id": "op_contpro",   "title": "Contenidos programá."}},
+            {"type": "reply", "reply": {"id": "menu_principal","title": "Menú principal"}}
         ],
         footer_text=""
     )
