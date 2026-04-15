@@ -7,23 +7,29 @@ app = Flask(__name__)
 
 @app.get("/privacy.html")
 def privacy():
+    # Sirve el archivo privacy.html que está en la misma carpeta de app.py
     return send_from_directory(".", "privacy.html")
 
 # ========= CONFIG =========
 VERIFY_TOKEN   = os.getenv("VERIFY_TOKEN", "mi_token_de_verificacion")
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN", "REEMPLAZA_CON_TU_TOKEN")
-API_VERSION    = os.getenv("WHATSAPP_API_VERSION", "v22.0")
+API_VERSION    = os.getenv("WHATSAPP_API_VERSION", "v20.0")
 
-# Logo
+# Logo (URL pública directa, p. ej. RAW de GitHub)
 LOGO_URL_UD = os.getenv("LOGO_URL_UD", "")
 
-# Infografías
+
+#-------------------------------------------------------------PRUEBA------------------
+# Imagenes tales como infografías
 INFO_CANCELARAPLAZAR = os.getenv("INFO_CANCELARAPLAZAR", "")
-INFO_CERTNOTAS       = os.getenv("INFO_CERTNOTAS", "")
-INFO_DERECHOS        = os.getenv("INFO_DERECHOS", "")
-INFO_CERTESTUDIOSU   = os.getenv("INFO_CERTESTUDIOSU", "")
-INFO_CERTESTUDIOSD   = os.getenv("INFO_CERTESTUDIOSD", "")
-INFO_PASANTIA        = os.getenv("INFO_PASANTIA", "")
+INFO_CERTNOTAS = os.getenv("INFO_CERTNOTAS", "")
+INFO_DERECHOS = os.getenv("INFO_DERECHOS", "")
+INFO_CERTESTUDIOSU = os.getenv("INFO_CERTESTUDIOSU", "")
+INFO_CERTESTUDIOSD = os.getenv("INFO_CERTESTUDIOSD", "")
+INFO_PASANTIA = os.getenv("INFO_PASANTIA", "")
+
+#-------------------------------------------------------------PRUEBA------------------
+
 
 # ========= HELPERS =========
 def graph_post(path: str, payload: dict):
@@ -55,6 +61,7 @@ def send_image_with_caption(phone_number_id: str, to: str, image_url: str, capti
         "image": {"link": image_url, "caption": caption}
     })
 
+
 def button_message(phone_number_id: str, to: str, header: dict, body_text: str, buttons: list, footer_text: str = ""):
     payload = {
         "messaging_product": "whatsapp",
@@ -73,9 +80,10 @@ def button_message(phone_number_id: str, to: str, header: dict, body_text: str, 
     return graph_post(f"{phone_number_id}/messages", payload)
 
 def qr_link(data: str, size: str = "512x512") -> str:
+    # Se conserva por compatibilidad, pero se dejó de usar donde el documento pide "sin QR"
     return f"https://api.qrserver.com/v1/create-qr-code/?size={size}&data={quote_plus(data)}"
 
-# ========= BIENVENIDA =========
+# ========= BIENVENIDA + MENÚ (3 tarjetas) =========
 BIENVENIDA = (
     "*Chat Institucional*\n"
     "*Proyecto Curricular de Ingeniería Industrial*\n"
@@ -83,14 +91,22 @@ BIENVENIDA = (
 )
 
 def send_welcome(phone_number_id: str, to: str):
+    # Logo SOLO aquí (no en el menú)
     if LOGO_URL_UD:
-        send_image_with_caption(phone_number_id, to, LOGO_URL_UD, BIENVENIDA)
+        send_image_with_caption(phone_number_id, to, LOGO_URL_UD,BIENVENIDA)
     else:
         send_text(phone_number_id, to, BIENVENIDA)
 
-# ========= BOTONES DE NAVEGACIÓN =========
+#--------------------------------------------------PRUEBA------------------------------------
+# Quiero cambiar las funciones de los botones, que el volver al menú principal vuelva al 
+# menú principal. Pero que además de eso cada back button de cada menú posible devuelva 
+# al menú inmediatamente anterior y de la opción del menú principal
+#--------------------------------------------------PRUEBA------------------------------------
+
+
+#--------------------------------------------------PRUEBA------------------------------------
 def send_back_tramites(phone_number_id: str, to: str):
-    """Botón doble: volver a Trámites O ir al Menú principal"""
+    """Botón doble: volver a Trámites o ir al Menú principal"""
     return button_message(
         phone_number_id, to,
         header=None,
@@ -101,7 +117,6 @@ def send_back_tramites(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-
 def send_back_to_menu_principal(phone_number_id: str, to: str):
     """Botón simple: solo volver al menú principal"""
     return button_message(
@@ -114,92 +129,127 @@ def send_back_to_menu_principal(phone_number_id: str, to: str):
         footer_text=""
     )
 
-# ========= MENÚ PRINCIPAL =========
+#-----------------------------MENU PRINCIPAL---------------------------------------------
+
 def send_menu_principal(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
         body_text="*Menú Principal*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "menu_tramites",   "title": "Trámites"}},
-            {"type": "reply", "reply": {"id": "menu_informacion","title": "Información"}},
-            {"type": "reply", "reply": {"id": "menu_otros",      "title": "Otros"}}
+            {"type": "reply", "reply": {"id": "menu_tramites", "title": "Trámites"}},
+            {"type": "reply", "reply": {"id": "menu_info", "title": "Información"}},
+            {"type": "reply", "reply": {"id": "menu_otros", "title": "Otros"}}
         ],
         footer_text=""
     )
 
-# ========= SUBMENÚ TRÁMITES =========
-def send_menu_tramites(phone_number_id: str, to: str):
-    # Tarjeta 1 de trámites
+    """
+    TODOS ESTOS MENUS DEBEN TENER UN BACK BUTTON QUE REGRESE AL MENÚ PRINCIPAL (1ER ORDEN)
+    """
+
+    #DERIVADOS TRAMITES
+    def send_menu_tramites(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
         body_text="*Trámites (1/2)*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_derechos",  "title": "Derechos pecuniarios"}},
+            {"type": "reply", "reply": {"id": "op_derechos", "title": "Derechos pecuniarios"}},
             {"type": "reply", "reply": {"id": "op_certnotas", "title": "Certificado de notas"}},
-            {"type": "reply", "reply": {"id": "op_certest",   "title": "Cert. de estudio"}}
+            {"type": "reply", "reply": {"id": "op_certest", "title": "Certificados de estudio"}}
         ],
         footer_text=""
     )
-    # Tarjeta 2 de trámites
+
     button_message(
         phone_number_id, to,
         header=None,
         body_text="*Trámites (2/2)*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_practica",  "title": "Práctica empresarial"}},
-            {"type": "reply", "reply": {"id": "op_contpro",   "title": "Contenidos programát."}},
-            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
+            {"type": "reply", "reply": {"id": "op_practica", "title": "Práctica empresarial"}},
+            {"type": "reply", "reply": {"id": "op_contpro", "title": "Contenidos programáticos"}},
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "⬅️ Menú principal"}}
         ],
         footer_text=""
     )
-
-# ========= SUBMENÚ INFORMACIÓN (por completar) =========
-def send_menu_informacion(phone_number_id: str, to: str):
+    
+    #FIN DERIVADOS TRAMITES
+    
+    #DERIVADOS INFORMACIÓN
+    def send_menu_informacion(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
         body_text="*Información*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_info_1",    "title": "Opción 1"}},
-            {"type": "reply", "reply": {"id": "op_info_2",    "title": "Opción 2"}},
+            {"type": "reply", "reply": {"id": "op_grado", "title": "Trabajo de grado"}},
+            {"type": "reply", "reply": {"id": "op_homo", "title": "Homologaciones"}},
             {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
         ],
         footer_text=""
     )
 
-# ========= SUBMENÚ OTROS (por completar) =========
-def send_menu_otros(phone_number_id: str, to: str):
+
+
+    #FIN DERIVADOS INFORMACIÓN
+    
+    #DERIVADOS OTROS
+    def send_menu_otros(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
         body_text="*Otros*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_otros_1",   "title": "Opción 1"}},
-            {"type": "reply", "reply": {"id": "op_otros_2",   "title": "Opción 2"}},
+            {"type": "reply", "reply": {"id": "op_cergrado",   "title": "Ceremonias de grado"}},
+            {"type": "reply", "reply": {"id": "op_otros_2",   "title": "Inscripción Saber PRO"}},
             {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
         ],
         footer_text=""
     )
 
-# ========= LINKS =========
+
+
+
+    #FIN DERIVADOS OTROS
+#--------------------------------------------------PRUEBA------------------------------------
+
+def send_back_to_menu_button(phone_number_id: str, to: str):
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Desea volver al menú?",
+        buttons=[{"type": "reply", "reply": {"id": "menu", "title": "Menú principal"}}],
+        footer_text=""
+    )
+
+# ========= LINKS (texto plano; sin QR donde se solicita) =========
 LINK_RIUD       = "https://repositorio.udistrital.edu.co"
 LINK_LABS       = "https://is.gd/LK3evv"
 LINK_BIBLIO     = "https://bibliotecas.udistrital.edu.co/servicios/paz_y_salvos"
 LINK_BIENESTAR  = "https://bienestar.udistrital.edu.co/node/634"
-LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
-LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
-TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
-TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
-TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
-TG_BANNER       = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/EQRfFbhqDKlPsIdKzjKL_HsBkYzq5JBC7PBkqlxDFU0TFQ?e=MXNNwn"
-RIUD_GUIA       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf"
-PE_FORMATO_SOLIC= "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EeGl6EoBDpJNuxKg6PqYJrwBZhx6TYivnL7uRWKco_D_LA?e=ig9DQu"
-PE_CARTA_TUTOR  = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EXp2Pl4gjFBDoIksXo_7_dYBwh8z_V6KO4D466Jr9A6biw?e=DboPOo"
-PE_INFORME      = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/Ea6rADiXua9FjuiE6B0ViGsBJ-Kc217eO1-9e-4LpS0hMw?e=IJ27L3"
 
-# ========= RESPUESTAS =========
+
+# Reintegro (Admisiones)
+LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
+
+# Derechos pecuniarios
+LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
+
+# Trabajo de grado — (se conserva banner; se ajustan formularios y textos)
+TG_FORM_1   = "https://forms.office.com/r/8ZkpzjTYvX"   # Acta sustentación (3 días antes)
+TG_FORM_3   = "https://forms.office.com/r/0r0hjX0Bh4"   # Permiso RIUD (tras inscripción)
+TG_FORM_4   = "https://forms.office.com/r/P81G4Fqt0A"   # Práctica empresarial (form base)
+TG_BANNER   = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/EQRfFbhqDKlPsIdKzjKL_HsBkYzq5JBC7PBkqlxDFU0TFQ?e=MXNNwn"
+RIUD_GUIA   = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf"
+
+# Práctica empresarial — links de soporte
+PE_FORMATO_SOLIC = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EeGl6EoBDpJNuxKg6PqYJrwBZhx6TYivnL7uRWKco_D_LA?e=ig9DQu"
+PE_CARTA_TUTOR   = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EXp2Pl4gjFBDoIksXo_7_dYBwh8z_V6KO4D466Jr9A6biw?e=DboPOo"
+PE_INFORME       = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/Ea6rADiXua9FjuiE6B0ViGsBJ-Kc217eO1-9e-4LpS0hMw?e=IJ27L3"
+
+# ========= RESPUESTAS (formales, ajustadas al documento) =========
+
 R_DERECHOS = (
     "*Derechos pecuniarios*\n\n"
     "Ingresa al siguiente enlace para conocer el paso a paso para que solicites tus documentos "
@@ -212,30 +262,32 @@ R_DERECHOS = (
     "⚠️ Revisa muy bien el procedimiento para evitar complicaciones."
 )
 
+
 R_CERTNOTAS = (
     "👉 *Cómo generar tu certificado de notas paso a paso*\n\n"
     "*Paso 1:* Ingresa a SGA con tus datos personales.\n"
-    "*Paso 2:* Menú superior izquierdo → Servicios → Derechos pecuniarios → Generar recibo\n"
+    "*Paso 2:* Menú superior izquierdo *→* Servicios *→* Derechos pecuniarios *→* Generar recibo\n"
     "*Paso 3:* En la lista desplegable elige *'Certificado de Notas'* y haz clic en *Aceptar*\n\n"
     "*IMPORTANTE:* Verifica que tus datos personales estén correctos antes de generar el recibo\n\n"
     "*Paso 4:* Luego de haber pagado en línea con PSE, podrás descargar en *'Recibos generados'* el certificado\n\n"
     "Por último, si deseas incluir información adicional necesaria, envía el PDF del certificado al correo: "
     "*sec-seing@udistrital.edu.co*\n"
-    "El proceso puede tardar entre 1 y 3 días hábiles."
+    "El proceso puede tardar entre *1 y 3 días hábiles.*"
 )
 
 R_CERTEST_1 = (
     "*Cómo generar tu certificado de estudios normal. Paso a paso:*\n\n"
     "*Paso 1:* Entra al portal institucional con tu *usuario*\n"
-    "*Paso 2:* En el menú izquierdo: Servicios → Derechos pecuniarios → Generar recibo\n"
+    "*Paso 2:* En el menú izquierdo: Servicios *→* Derechos pecuniarios *→* Generar recibo\n"
     "*Paso 3:* En el campo Derecho pecuniario, elige *'Constancias de estudio'* y haz clic en *Aceptar*\n"
     "Nota: Una vez hecho esto, se generará el recibo de pago automáticamente\n"
-    "*Paso 4:* Elige pago en línea PSE → Selecciona tu banco → Completa la transacción\n"
+    "*Paso 4:* Elige pago en línea PSE *→* Selecciona tu banco *→* Completa la transacción\n"
 )
+
 
 R_CERTEST_2 = (
     "*Certificado de estudios especial. Paso a paso:*\n\n"
-    "*Paso 1:* Primero genera y paga el recibo como en el proceso de Certificado de estudios normal.\n"
+    "*Paso 1:* Primero genera y paga el recibo como en el proceso de *Certificado de estudios normal.*\n"
     "*Paso 2:* Envía un correo a: *secingindustrial@udistrital.edu.co* incluyendo:\n"
     "• Nombre completo\n"
     "• Código estudiantil\n"
@@ -265,11 +317,13 @@ R_PRACTICA = (
     f"📄 Formato de informe de práctica: {PE_INFORME}"
 )
 
+
+
 # ========= WEBHOOKS =========
 @app.get("/webhook")
 def verify():
-    mode      = request.args.get("hub.mode")
-    token     = request.args.get("hub.verify_token")
+    mode = request.args.get("hub.mode")
+    token = request.args.get("hub.verify_token")
     challenge = request.args.get("hub.challenge")
     if mode == "subscribe" and token == VERIFY_TOKEN:
         return challenge, 200
@@ -286,14 +340,14 @@ def webhook():
 
 def process_webhook(data):
     try:
-        entry           = data["entry"][0]
-        change          = entry["changes"][0]["value"]
+        entry  = data["entry"][0]
+        change = entry["changes"][0]["value"]
         phone_number_id = change["metadata"]["phone_number_id"]
-        messages        = change.get("messages", [])
+        messages = change.get("messages", [])
         if not messages:
             return
 
-        msg    = messages[0]
+        msg = messages[0]
         msg_id = msg.get("id", "")
         if msg_id in processed_ids:
             print(f"Duplicado ignorado: {msg_id}")
@@ -312,33 +366,33 @@ def process_webhook(data):
             elif inter.get("type") == "list_reply":
                 body = inter["list_reply"]["id"].strip().lower()
 
-        # ===== SALUDO INICIAL =====
-        if body in ("hola", "menu", "hi", "buenas", "menu_principal"):
+        # SALUDO INICIAL
+        if body in ("hola", "menu", "hi", "buenas"):
             send_welcome(phone_number_id, from_wa)
-            send_menu_principal(phone_number_id, from_wa)
+            send_menu_buttons_all(phone_number_id, from_wa)
 
-        # ===== EASTER EGG =====
-        elif body in ("como estas", "cómo estás", "¿cómo estás?", "como estás",
-                      "cómo estas", "¿como estas?", "¿como estás?"):
+        
+        elif body in ("¿Cómo estás?", "Cómo estás?", "¿cómo estás?", "cómo estás?", "cómo estas?", "¿como estás?", "como estás?", "como estas?", "¿como estas?", "¿Como estas?"):
             SALUDO = (
-                "*Nadie se había preocupado tanto por mí* 🥹\n"
-                "Ahí vamos, luchandola\n"
-                "Muchas gracias por preguntar"
+            "*Nadie se había preocupado tanto por mi 🥹*\n"
+            "Ahí vamos, luchandola\n"
+            "Muchas gracias por preguntar"
             )
-            send_text(phone_number_id, from_wa, SALUDO)
+            send_text(phone_number_id, from_wa , SALUDO)
             send_back_to_menu_principal(phone_number_id, from_wa)
+    
 
-        # ===== MENÚS PRINCIPALES =====
+        #-------------------------------------------------------------PRUEBA------------------
         elif body == "menu_tramites":
             send_menu_tramites(phone_number_id, from_wa)
-
-        elif body == "menu_informacion":
+            #send_menu_principal(phone_number_id, from_wa)
+        elif body == "menu_info":
             send_menu_informacion(phone_number_id, from_wa)
-
         elif body == "menu_otros":
             send_menu_otros(phone_number_id, from_wa)
 
-        # ===== OPCIONES DE TRÁMITES =====
+
+            # --------------------SOLO TRAMITES-------------------------------------
         elif body == "op_derechos":
             send_image_with_caption(phone_number_id, from_wa, INFO_DERECHOS, "")
             send_text(phone_number_id, from_wa, R_DERECHOS)
@@ -348,34 +402,34 @@ def process_webhook(data):
             send_image_with_caption(phone_number_id, from_wa, INFO_CERTNOTAS, "")
             send_text(phone_number_id, from_wa, R_CERTNOTAS)
             send_back_tramites(phone_number_id, from_wa)
-
-        elif body == "op_certest":
+            
+         elif body == "op_certest":
             send_image_with_caption(phone_number_id, from_wa, INFO_CERTESTUDIOSU, "")
             send_text(phone_number_id, from_wa, R_CERTEST_1)
             send_image_with_caption(phone_number_id, from_wa, INFO_CERTESTUDIOSD, "")
             send_text(phone_number_id, from_wa, R_CERTEST_2)
-            send_back_tramites(phone_number_id, from_wa)
 
         elif body == "op_practica":
-            send_image_with_caption(phone_number_id, from_wa, INFO_PASANTIA, "")
+            #send_image_with_caption(phone_number_id, from_wa, "AQUI VA LA INFOGRAFIA DE PRACTICAS, "")
             send_text(phone_number_id, from_wa, R_PRACTICA)
             send_back_tramites(phone_number_id, from_wa)
 
         elif body == "op_contpro":
-            send_text(phone_number_id, from_wa, "⚙️ Contenidos programáticos — próximamente.")
+            send_text(phone_number_id, from_wa, "Contenidos programáticos")
             send_back_tramites(phone_number_id, from_wa)
 
-        # ===== OPCIONES DE INFORMACIÓN (por completar) =====
-        elif body == "op_info_1":
+        # --------------------INFORMACIÓN -------------------------------------
+        elif body == "op_grado":
             send_text(phone_number_id, from_wa, "Información opción 1 — por completar.")
             send_back_to_menu_principal(phone_number_id, from_wa)
 
-        elif body == "op_info_2":
+        elif body == "op_homo":
             send_text(phone_number_id, from_wa, "Información opción 2 — por completar.")
             send_back_to_menu_principal(phone_number_id, from_wa)
 
-        # ===== OPCIONES DE OTROS (por completar) =====
-        elif body == "op_otros_1":
+        # --------------------OTROS -------------------------------------
+
+        elif body == "op_cergrado":
             send_text(phone_number_id, from_wa, "Otros opción 1 — por completar.")
             send_back_to_menu_principal(phone_number_id, from_wa)
 
@@ -383,11 +437,28 @@ def process_webhook(data):
             send_text(phone_number_id, from_wa, "Otros opción 2 — por completar.")
             send_back_to_menu_principal(phone_number_id, from_wa)
 
-        # ===== DEFAULT =====
+
+
+        
+            
+        #-------------------------------------------------------------PRUEBA------------------
+
+
+
+        
+        
+        #-------------------------------------------------------------PRUEBA------------------
+            """ Mensaje modelo con infografía y respuesta
+            send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
+            send_text(phone_number_id, from_wa, R1)
+            send_back_to_menu_button(phone_number_id, from_wa)
+            """
+        #-------------------------------------------------------------PRUEBA------------------
+   
         else:
             send_welcome(phone_number_id, from_wa)
             send_menu_principal(phone_number_id, from_wa)
-
+    
     except Exception as e:
         print("Error procesando payload:", e)
 
