@@ -198,7 +198,18 @@ def send_menu_informacion(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-    
+
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?\n",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
+        ],
+        footer_text=""
+    )
+
+
 
 # ========= SUBMENÚ OTROS (por completar) =========
 def send_menu_otros(phone_number_id: str, to: str):
@@ -385,37 +396,31 @@ def process_webhook(data):
         # ===== OPCIONES DE INFORMACIÓN (por completar) =====
         elif body == "op_consejo":
             send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
-            send_back_to_menu_principal(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
         
         elif body == "op_cancelarA":
             #Cancelar/Aplazar de asignaturas 
             send_text(phone_number_id, from_wa, "Cancelar asignatura - Próximamente")
-            send_back_to_menu_principal(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_cancelarS":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Cancelar semestre - Próximamente")
-            send_back_to_menu_principal(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_reintegro":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Reintegro - Próximamente")
-            send_back_to_menu_principal(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_calend":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Calendario académico - Próximamente")
-            send_back_to_menu_principal(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_pazsalvos":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Paz y Salvos - Próximamente")
-            send_back_to_menu_principal(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
         
         # ===== OPCIONES DE OTROS (por completar) =====
