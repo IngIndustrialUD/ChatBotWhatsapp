@@ -102,6 +102,25 @@ def send_back_tramites(phone_number_id: str, to: str):
         footer_text=""
     )
 
+
+
+
+def send_back_informacion(phone_number_id: str, to: str):
+    """Botón doble: volver a Información O ir al Menú principal"""
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_info", "title": "Volver a Información"}},
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
+        ],
+        footer_text=""
+    )
+
+
+
+
 def send_back_to_menu_principal(phone_number_id: str, to: str):
     """Botón simple: solo volver al menú principal"""
     return button_message(
@@ -119,7 +138,7 @@ def send_menu_principal(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Menú Principal*\nSeleccione una opción:",
+        body_text="*Menú Principal*\nEn esta sección encontrarás:\n*Tramites:* Derechos pecuniarios, Certificados, Práctica empresarial y contenidos programáticos.\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "menu_tramites",   "title": "Trámites"}},
             {"type": "reply", "reply": {"id": "menu_informacion","title": "Información"}},
