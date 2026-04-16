@@ -304,8 +304,8 @@ def process_webhook(data):
             send_menu_principal(phone_number_id, from_wa)
 
         # ===== EASTER EGG =====
-        elif body in ("como estas", "cómo estás", "¿cómo estás?", "como estás",
-                      "cómo estas", "¿como estas?", "¿como estás?"):
+        elif body in ("Como estas", "Cómo estás", "¿Cómo estás?", "Como estás",
+                      "Cómo estas", "¿Como estas?", "¿como estás?"):
             SALUDO = (
                 "*Nadie se había preocupado tanto por mí* 🥹\n"
                 "Ahí vamos, luchandola\n"
