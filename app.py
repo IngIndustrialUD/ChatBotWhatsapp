@@ -386,31 +386,37 @@ def process_webhook(data):
         elif body == "op_consejo":
             send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
-
+            send_back_informacion(phone_number_id, from_wa)
+        
         elif body == "op_cancelarA":
             #Cancelar/Aplazar de asignaturas 
             send_text(phone_number_id, from_wa, "Cancelar asignatura - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
-
+            send_back_informacion(phone_number_id, from_wa)
+            
         elif body == "op_cancelarS":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Cancelar semestre - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
-
+            send_back_informacion(phone_number_id, from_wa)
+            
         elif body == "op_reintegro":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Reintegro - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
-
+            send_back_informacion(phone_number_id, from_wa)
+            
         elif body == "op_calend":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Calendario académico - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
+            send_back_informacion(phone_number_id, from_wa)
+            
         elif body == "op_pazsalvos":
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Paz y Salvos - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
-
+            send_back_informacion(phone_number_id, from_wa)
         
         # ===== OPCIONES DE OTROS (por completar) =====
         elif body == "op_otros_1":
