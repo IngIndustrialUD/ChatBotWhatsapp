@@ -112,7 +112,7 @@ def send_back_informacion(phone_number_id: str, to: str):
         header=None,
         body_text="¿Qué deseas hacer ahora?",
         buttons=[
-            {"type": "reply", "reply": {"id": "menu_info", "title": "Volver a Información"}},
+            {"type": "reply", "reply": {"id": "menu_informacion", "title": "Volver a Información"}},
             {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
         ],
         footer_text=""
@@ -138,7 +138,7 @@ def send_menu_principal(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Menú Principal*\n\nEn esta sección encontrarás:\n*• Tramites:* Derechos pecuniarios, Certificados, Práctica empresarial y contenidos programáticos.\n\n*• Información:* Consejo de carrera, Cancelar/aplazar semestre/asignatura, reintegro, calendario académico, paz y salvos.\n\n*• Otros:* Ceremonias de grado, inscripción Saber Pro, Contactos, Cambio de Plan de estudios, Cambio TI *->* CC.\n\nSeleccione una opción:",
+        body_text="*Menú Principal*\nEn esta sección encontrarás:\n\n*• Tramites:* Derechos pecuniarios, Certificados, Práctica empresarial y contenidos programáticos.\n\n*• Información:* Consejo de carrera, Cancelar/aplazar semestre/asignatura, reintegro, calendario académico, paz y salvos.\n\n*• Otros:* Ceremonias de grado, inscripción Saber Pro, Contactos, Cambio de Plan de estudios, Cambio TI *->* CC.\n\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "menu_tramites",   "title": "Trámites"}},
             {"type": "reply", "reply": {"id": "menu_informacion","title": "Información"}},
@@ -179,14 +179,26 @@ def send_menu_informacion(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Información*\nSeleccione una opción:",
+        body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Cancelar/Aplazar asignaturas*\n\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_info_1",    "title": "Opción 1"}},
-            {"type": "reply", "reply": {"id": "op_info_2",    "title": "Opción 2"}},
-            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
+            {"type": "reply", "reply": {"id": "op_consejo", "title": "Consejo de Carrera"}},
+            {"type": "reply", "reply": {"id": "op_cancelarS", "title":  "Cancelar/aplazar S"}},
+            {"type": "reply", "reply": {"id": "op_cancelarA","title": "Cancelar/aplazar A"}}
         ],
         footer_text=""
     )
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="*Información (2/2)*\nEn esta sección encontrarás:\n\n*• Reintegro*\n\n*• Calendario académico*\n\n*• Paz y salvos*\n\nSeleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_reintegro",  "title": "Reintegro"}},
+            {"type": "reply", "reply": {"id": "op_calend",   "title": "Calendario académico"}},
+            {"type": "reply", "reply": {"id": "op_pazsalvos","title": "Paz y Salvos"}}
+        ],
+        footer_text=""
+    )
+    
 
 # ========= SUBMENÚ OTROS (por completar) =========
 def send_menu_otros(phone_number_id: str, to: str):
@@ -371,14 +383,35 @@ def process_webhook(data):
             send_back_tramites(phone_number_id, from_wa)
 
         # ===== OPCIONES DE INFORMACIÓN (por completar) =====
-        elif body == "op_info_1":
-            send_text(phone_number_id, from_wa, "Información opción 1 — por completar.")
+        elif body == "op_consejo":
+            send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
 
-        elif body == "op_info_2":
-            send_text(phone_number_id, from_wa, "Información opción 2 — por completar.")
+        elif body == "op_cancelarA":
+            #Cancelar/Aplazar de asignaturas 
+            send_text(phone_number_id, from_wa, "Cancelar asignatura - Próximamente")
             send_back_to_menu_principal(phone_number_id, from_wa)
 
+        elif body == "op_cancelarS":
+            #Cancelar/Aplazar de semestre 
+            send_text(phone_number_id, from_wa, "Cancelar semestre - Próximamente")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_reintegro":
+            #Cancelar/Aplazar de semestre 
+            send_text(phone_number_id, from_wa, "Reintegro - Próximamente")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_calend":
+            #Cancelar/Aplazar de semestre 
+            send_text(phone_number_id, from_wa, "Calendario académico - Próximamente")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+        elif body == "op_pazsalvos":
+            #Cancelar/Aplazar de semestre 
+            send_text(phone_number_id, from_wa, "Paz y Salvos - Próximamente")
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        
         # ===== OPCIONES DE OTROS (por completar) =====
         elif body == "op_otros_1":
             send_text(phone_number_id, from_wa, "Otros opción 1 — por completar.")
