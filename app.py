@@ -138,7 +138,7 @@ def send_menu_principal(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Menú Principal*\nEn esta sección encontrarás:\n*Tramites:* Derechos pecuniarios, Certificados, Práctica empresarial y contenidos programáticos.\n*Información:* Consejo de carrera, Cancelar/aplazar semestre/asignatura, reintegro, calendario académico, paz y salvos.\n*Otros:* Ceremonias de grado, inscripción Saber Pro, Contactos, Cambio de Plan de estudios, Cambio TI *->* CC.\nSeleccione una opción:",
+        body_text="*Menú Principal*\n\nEn esta sección encontrarás:\n*• Tramites:* Derechos pecuniarios, Certificados, Práctica empresarial y contenidos programáticos.\n\n*• Información:* Consejo de carrera, Cancelar/aplazar semestre/asignatura, reintegro, calendario académico, paz y salvos.\n\n*• Otros:* Ceremonias de grado, inscripción Saber Pro, Contactos, Cambio de Plan de estudios, Cambio TI *->* CC.\n\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "menu_tramites",   "title": "Trámites"}},
             {"type": "reply", "reply": {"id": "menu_informacion","title": "Información"}},
