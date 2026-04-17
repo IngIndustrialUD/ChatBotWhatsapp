@@ -211,7 +211,7 @@ def send_menu_informacion(phone_number_id: str, to: str):
         header=None,
         body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Cancelar/Aplazar asignaturas*\n\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_concar", "title": "Consejo de Carrera"}},
+            {"type": "reply", "reply": {"id": "menu_concar", "title": "Consejo de Carrera"}},
             {"type": "reply", "reply": {"id": "op_cancelars", "title":  "Cancelar/aplazar S"}},
             {"type": "reply", "reply": {"id": "op_cancelara","title": "Cancelar/aplazar A"}}
         ],
@@ -228,7 +228,6 @@ def send_menu_informacion(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-
     button_message(
         phone_number_id, to,
         header=None,
@@ -248,7 +247,7 @@ def send_menu_concar(phone_number_id: str, to: str):
         buttons=[
             {"type": "reply", "reply": {"id": "op_tragrado",   "title": "Trabajo de grado"}},
             {"type": "reply", "reply": {"id": "op_homo",   "title": "Homologaciones"}},
-            {"type": "reply", "reply": {"id": "menu_actconsejo","title": "Actas de Consejo"}}
+            {"type": "reply", "reply": {"id": "op_actconsejo","title": "Actas de Consejo"}}
         ],
         footer_text=""
     )
