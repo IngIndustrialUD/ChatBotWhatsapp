@@ -327,9 +327,9 @@ R_cancelars = (
     f"*{LINK_SECACADEMICA}*\n\n"
     "• *En ambos casos:* Debes enviar la carta de solicitud firmada explicando los motivos,\n"
     "además de los Paz y Salvos de:\n\n"
-    f"• *Laboratorios:** {LINK_LABS}*\n"
-    f"• *Biblioteca:** {LINK_BIBLIO}*\n"
-    f"• *Bienestar institucional:** {LINK_BIENESTAR}*\n"
+    f"• *Laboratorios:* {LINK_LABS}\n"
+    f"• *Biblioteca:* {LINK_BIBLIO}\n"
+    f"• *Bienestar institucional:* {LINK_BIENESTAR}\n"
     "*- Reintegro posterior:* Tras la aprobación del *aplazamiento* o *cancelación* el\n"
     "estudiante tiene máximo dos períodos académicos para solicitar reintegro"
 )
