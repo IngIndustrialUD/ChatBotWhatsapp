@@ -330,7 +330,7 @@ R_cancelars = (
     f"• *Laboratorios:* {LINK_LABS}\n"
     f"• *Biblioteca:* {LINK_BIBLIO}\n"
     f"• *Bienestar institucional:* {LINK_BIENESTAR}\n"
-    "*- Reintegro posterior:* Tras la aprobación del *aplazamiento* o *cancelación* el\n"
+    "*- Reintegro posterior:* Tras la aprobación del *aplazamiento* o *cancelación* el\n\n"
     "estudiante tiene máximo dos períodos académicos para solicitar reintegro"
 )
 
