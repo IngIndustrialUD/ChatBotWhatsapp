@@ -256,6 +256,7 @@ def send_menu_concar(phone_number_id: str, to: str):
         header=None,
         body_text="¿Qué deseas hacer ahora?\n",
         buttons=[
+            {"type": "reply", "reply": {"id": "menu_informacion",  "title": "Información"}},
             {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
         ],
         footer_text=""
