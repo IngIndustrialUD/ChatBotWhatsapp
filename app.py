@@ -117,7 +117,11 @@ def send_back_informacion(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-    
+
+
+
+
+###========================================ERROR NO MANDA EL MENÚ CON LA OPCIÓN TRABAJO DE GRADO=================================
 def send_back_concar(phone_number_id: str, to: str):
     """Botón doble: volver a Consejo de carrera O ir al Menú principal"""
     return button_message(
@@ -130,7 +134,7 @@ def send_back_concar(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-
+###========================================ERROR NO MANDA EL MENÚ CON LA OPCIÓN TRABAJO DE GRADO=================================
 
 def send_back_otros(phone_number_id: str, to: str):
     """Botón doble: volver a Información O ir al Menú principal"""
