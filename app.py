@@ -211,7 +211,7 @@ def send_menu_informacion(phone_number_id: str, to: str):
         header=None,
         body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Cancelar/Aplazar asignaturas*\n\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_consejo", "title": "Consejo de Carrera"}},
+            {"type": "reply", "reply": {"id": "op_concar", "title": "Consejo de Carrera"}},
             {"type": "reply", "reply": {"id": "op_cancelars", "title":  "Cancelar/aplazar S"}},
             {"type": "reply", "reply": {"id": "op_cancelara","title": "Cancelar/aplazar A"}}
         ],
@@ -252,8 +252,15 @@ def send_menu_concar(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-
-
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?\n",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
+        ],
+        footer_text=""
+    )
 
 
 
@@ -447,7 +454,10 @@ def process_webhook(data):
 
         elif body == "menu_otros":
             send_menu_otros(phone_number_id, from_wa)
-
+    
+        elif body == "menu_concar":
+            send_menu_concar(phone_number_id, from_wa)
+        
         # ===== OPCIONES DE TRÁMITES =====
         elif body == "op_derechos":
             send_image_with_caption(phone_number_id, from_wa, INFO_DERECHOS, "")
@@ -476,11 +486,6 @@ def process_webhook(data):
             send_back_tramites(phone_number_id, from_wa)
 
         # ===== OPCIONES DE INFORMACIÓN (por completar) =====
-        elif body == "op_consejo":
-            #send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
-            send_menu_concar(phone_number_id, from_wa)
-            send_back_informacion(phone_number_id, from_wa)
-        
         elif body == "op_cancelara":
             #Cancelar/Aplazar de asignaturas 
             send_text(phone_number_id, from_wa, "Cancelar asignatura - Próximamente")
