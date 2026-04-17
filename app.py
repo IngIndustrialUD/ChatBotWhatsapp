@@ -194,8 +194,8 @@ def send_menu_informacion(phone_number_id: str, to: str):
         body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Cancelar/Aplazar asignaturas*\n\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "op_consejo", "title": "Consejo de Carrera"}},
-            {"type": "reply", "reply": {"id": "op_cancelarS", "title":  "Cancelar/aplazar S"}},
-            {"type": "reply", "reply": {"id": "op_cancelarA","title": "Cancelar/aplazar A"}}
+            {"type": "reply", "reply": {"id": "op_cancelars", "title":  "Cancelar/aplazar S"}},
+            {"type": "reply", "reply": {"id": "op_cancelara","title": "Cancelar/aplazar A"}}
         ],
         footer_text=""
     )
@@ -310,7 +310,7 @@ R_PRACTICA = (
     "*Práctica empresarial*\n\n"
 )
 
-R_cancelarS = (
+R_cancelars = (
     "*Como cancelar o aplazar semestre*\n\n"
     
 )
@@ -420,15 +420,15 @@ def process_webhook(data):
             send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
             send_back_informacion(phone_number_id, from_wa)
         
-        elif body == "op_cancelarA":
+        elif body == "op_cancelara":
             #Cancelar/Aplazar de asignaturas 
             send_text(phone_number_id, from_wa, "Cancelar asignatura - Próximamente")
             send_back_informacion(phone_number_id, from_wa)
             
-        elif body == "op_cancelarS":
+        elif body == "op_cancelars":
             #Cancelar/Aplazar de semestre 
             send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
-            send_text(phone_number_id, from_wa, R_cancelarS)
+            send_text(phone_number_id, from_wa, R_cancelars)
             send_back_información(phone_number_id, from_wa)
             
         elif body == "op_reintegro":
