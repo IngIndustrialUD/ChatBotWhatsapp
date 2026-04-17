@@ -118,6 +118,18 @@ def send_back_informacion(phone_number_id: str, to: str):
         footer_text=""
     )
 
+def send_back_otros(phone_number_id: str, to: str):
+    """Botón doble: volver a Información O ir al Menú principal"""
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_informacion", "title": "Volver a Otros"}},
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
+        ],
+        footer_text=""
+    )
 
 
 
@@ -208,6 +220,11 @@ def send_menu_informacion(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
+
+# ========= SUBMENÚ CONSEJO DE CARRERA =========
+
+
+
 
 
 
