@@ -473,7 +473,8 @@ def process_webhook(data):
 
         # ===== OPCIONES DE INFORMACIÓN (por completar) =====
         elif body == "op_consejo":
-            send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
+            #send_text(phone_number_id, from_wa, "Consejo de carrera - Próximamente")
+            send_menu_concar(phone_number_id, from_wa)
             send_back_informacion(phone_number_id, from_wa)
         
         elif body == "op_cancelara":
