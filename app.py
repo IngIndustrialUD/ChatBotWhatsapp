@@ -429,7 +429,7 @@ def process_webhook(data):
             #Cancelar/Aplazar de semestre 
             send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
             send_text(phone_number_id, from_wa, R_cancelars)
-            send_back_información(phone_number_id, from_wa)
+            send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_reintegro":
             #Cancelar/Aplazar de semestre 
