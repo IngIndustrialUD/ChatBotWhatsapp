@@ -243,12 +243,17 @@ def send_menu_otros(phone_number_id: str, to: str):
     )
 
 # ========= LINKS =========
-LINK_RIUD       = "https://repositorio.udistrital.edu.co"
-LINK_LABS       = "https://is.gd/LK3evv"
+LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
+LINK_SECACADEMICA = "asecing@udistrital.edu.co"
+LINK_LABS = "https://facingenieria.udistrital.edu.co/laboratorios/labing/index.php/tramites-y-servicios/paz-y-salvo"
 LINK_BIBLIO     = "https://bibliotecas.udistrital.edu.co/servicios/paz_y_salvos"
 LINK_BIENESTAR  = "https://bienestar.udistrital.edu.co/node/634"
+
+
+
+
+LINK_RIUD       = "https://repositorio.udistrital.edu.co"
 LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
-LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
 TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
 TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
@@ -312,7 +317,21 @@ R_PRACTICA = (
 
 R_cancelars = (
     "*Como cancelar o aplazar semestre*\n\n"
-    
+    "Ten en cuenta de que existen 2 momentos diferentes para solicitar o"
+    "el aplazamiento del semestre\n\n"
+    "• *Durante los primero 10 días hábiles de clase:*\n"
+    "Sistema de Gestión Académica *->* Servicios *->* Retiro voluntario.\n"
+    "Diligenciar el *formulario* para realizar la solicitud\n\n"
+    "• *Después de las 2 semanas iniciadas clases:*\n"
+    "Debes realizar la solicitud a *Consejo de Facultad - Secretaría Académica*, al correo:\n\n"
+    f"*{LINK_SECACADEMICA}*\n\n"
+    "• *En ambos casos:* Debes enviar la carta de solicitud firmada explicando los motivos,\n"
+    "además de los Paz y Salvos de:\n\n"
+    f"• *Laboratorios: {LINK_LABS}*"
+    f"• *Biblioteca: {LINK_BIBLIO}*"
+    f"• *Bienestar institucional: {LINK_BIENESTAR}* "
+    "*- Reintegro posterior:* Tras la aprobación del *aplazamiento* o *cancelación* el\n"
+    "estudiante tiene máximo dos períodos académicos para solicitar reintegro"
 )
 
 # ========= WEBHOOKS =========
