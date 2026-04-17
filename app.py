@@ -310,6 +310,11 @@ R_PRACTICA = (
     "*Práctica empresarial*\n\n"
 )
 
+R_cancelarS = (
+    "*Como cancelar o aplazar semestre*\n\n"
+    
+)
+
 # ========= WEBHOOKS =========
 @app.get("/webhook")
 def verify():
@@ -422,8 +427,9 @@ def process_webhook(data):
             
         elif body == "op_cancelarS":
             #Cancelar/Aplazar de semestre 
-            send_text(phone_number_id, from_wa, "Cancelar semestre - Próximamente")
-            send_back_informacion(phone_number_id, from_wa)
+            send_image_with_caption(phone_number_id, from_wa, INFO_CANCELARAPLAZAR, "")
+            send_text(phone_number_id, from_wa, R_cancelarS)
+            send_back_información(phone_number_id, from_wa)
             
         elif body == "op_reintegro":
             #Cancelar/Aplazar de semestre 
@@ -439,6 +445,12 @@ def process_webhook(data):
             #Cancelar/Aplazar de semestre 
             send_text(phone_number_id, from_wa, "Paz y Salvos - Próximamente")
             send_back_informacion(phone_number_id, from_wa)
+
+
+        # ===== OPCIONES DE CONSEJO DE CARRERA =====
+
+
+
         
         # ===== OPCIONES DE OTROS (por completar) =====
         elif body == "op_otros_1":
