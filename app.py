@@ -117,6 +117,20 @@ def send_back_informacion(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
+    
+def send_back_concar(phone_number_id: str, to: str):
+    """Botón doble: volver a Consejo de carrera O ir al Menú principal"""
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_concar", "title": "Volver a Consejo de Carrera"}},
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
+        ],
+        footer_text=""
+    )
+
 
 def send_back_otros(phone_number_id: str, to: str):
     """Botón doble: volver a Información O ir al Menú principal"""
@@ -221,8 +235,19 @@ def send_menu_informacion(phone_number_id: str, to: str):
         footer_text=""
     )
 
-# ========= SUBMENÚ CONSEJO DE CARRERA =========
-
+# ========= SUBMENÚ CONSEJO DE CARRERA ==========
+def send_menu_concar(phone_number_id: str, to: str):
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="*Consejo de Carrera*\nEn esta sección encontrarás:\n\n*• Trabajo de grado:* Modalidades de grado\n\n*• Información procesos proyecto de grado*\n\n*• Formulario del RIUD*\n\n Seleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_tragrado",   "title": "Trabajo de grado"}},
+            {"type": "reply", "reply": {"id": "op_homo",   "title": "Homologaciones"}},
+            {"type": "reply", "reply": {"id": "menu_actconsejo","title": "Actas de Consejo"}}
+        ],
+        footer_text=""
+    )
 
 
 
@@ -334,6 +359,18 @@ R_cancelars = (
     "estudiante tiene máximo dos períodos académicos para solicitar reintegro"
 )
 
+R_tragrado = (
+    "En proceso, muy amable"
+)
+
+R_homo = (
+    "En proceso, muy amable"
+)
+
+R_actconsejo = (
+    "En proceso, muy amable"
+)
+    
 # ========= WEBHOOKS =========
 @app.get("/webhook")
 def verify():
@@ -467,7 +504,20 @@ def process_webhook(data):
 
 
         # ===== OPCIONES DE CONSEJO DE CARRERA =====
+        elif body == "op_tragrado":
+            #Trabajo de grado
+            send_text(phone_number_id, from_wa, R_tragrado)
+            send_back_concar(phone_number_id, from_wa)
 
+        elif body == "op_homo":
+            #Homologaciones
+            send_text(phone_number_id, from_wa, R_homo)
+            send_back_concar(phone_number_id, from_wa)
+
+        elif body == "op_actconsejo":
+            #Actas de Consejo
+            send_text(phone_number_id, from_wa, R_actconsejo)
+            send_back_concar(phone_number_id, from_wa)
 
 
         
