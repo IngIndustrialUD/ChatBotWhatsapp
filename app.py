@@ -290,7 +290,7 @@ def send_menu_tragrado(phone_number_id: str, to: str):
         header=None,
         body_text="¿Qué deseas hacer ahora?\n",
         buttons=[
-            {"type": "reply", "reply": {"id": "menu_informacion",  "title": "Información"}},
+            {"type": "reply", "reply": {"id": "menu_concar",  "title": "Consejo de Carrera"}},
             {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
         ],
         footer_text=""
