@@ -416,7 +416,7 @@ R_homo = (
     "y homologaciones puede encontrarse en el siguiente enlace:\n"
     f"{LINK_HOMO}\n\n"
     "• Es responsabilidad del *estudiante* que solicita la homologación entregar los"
-    "contenidos temáticos de las asignaturas o espacios académicos objeto de homologación"
+    "contenidos temáticos de las asignaturas o espacios académicos objeto de homologación\n\n"
     "• Solo podrán ser objeto de posibles homologaciones los espacios académicos (asignaturas)"
     " *cursados y aprobados* con nota *igual* o *superior* a 3.5 sobre 5.0, o su equivalente en"
     "una escala diferente\n\nEnlace del *Acuerdo N°04, octubre 16 de 2018:*\n"
