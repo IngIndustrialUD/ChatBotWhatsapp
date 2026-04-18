@@ -413,7 +413,7 @@ R_tragrado = (
 
 R_homo = (
     "La información referente a transferencias internas, transferencias externas,"
-    "y homologaciones puede encontrarse en el siguiente enlace:"
+    "y homologaciones puede encontrarse en el siguiente enlace:\n"
     f"{LINK_HOMO}\n\n"
     "• Es responsabilidad del *estudiante* que solicita la homologación entregar los"
     "contenidos temáticos de las asignaturas o espacios académicos objeto de homologación"
