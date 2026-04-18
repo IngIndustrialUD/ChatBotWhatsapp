@@ -118,10 +118,6 @@ def send_back_informacion(phone_number_id: str, to: str):
         footer_text=""
     )
 
-
-
-
-###========================================ERROR NO MANDA EL MENÚ CON LA OPCIÓN TRABAJO DE GRADO=================================
 def send_back_concar(phone_number_id: str, to: str):
     """Botón doble: volver a Consejo de carrera O ir al Menú principal"""
     return button_message(
@@ -134,7 +130,21 @@ def send_back_concar(phone_number_id: str, to: str):
         ],
         footer_text=""
     )
-###========================================ERROR NO MANDA EL MENÚ CON LA OPCIÓN TRABAJO DE GRADO=================================
+
+def send_back_tragrado(phone_number_id: str, to: str):
+    """Botón doble: volver a Trabajo de grado O ir al Menú principal"""
+    return button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_tragrado", "title": "Trabajo de grado"}},
+            {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
+        ],
+        footer_text=""
+    )
+
+
 
 def send_back_otros(phone_number_id: str, to: str):
     """Botón doble: volver a Información O ir al Menú principal"""
@@ -262,6 +272,32 @@ def send_menu_concar(phone_number_id: str, to: str):
         footer_text=""
     )
 
+# ========= SUBMENÚ TRABAJO DE GRADO ==========
+def send_menu_concar(phone_number_id: str, to: str):
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="*Consejo de Carrera*\nEn esta sección encontrarás:\n\n*• Trabajo de grado:* Modalidades de grado\n\n*• Información procesos proyecto de grado*\n\n*• Formulario del RIUD*\n\n Seleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_modgrado",   "title": "Modalidades grado"}},
+            {"type": "reply", "reply": {"id": "op_seggrado",   "title": "Seguimiento grado"}},
+            {"type": "reply", "reply": {"id": "op_formriud","title": "Formulario RIUD"}}
+        ],
+        footer_text=""
+    )
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?\n",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_informacion",  "title": "Información"}},
+            {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
+        ],
+        footer_text=""
+    )
+
+
+
 
 
 # ========= SUBMENÚ OTROS (por completar) =========
@@ -381,7 +417,19 @@ R_homo = (
 R_actconsejo = (
     "En proceso, muy amable"
 )
-    
+
+R_modgrado = (
+    "En proceso, muy amable"
+)
+
+R_seggrado = (
+    "En proceso, muy amable"
+)
+
+R_formriud = (
+    "En proceso, muy amable"
+)
+
 # ========= WEBHOOKS =========
 @app.get("/webhook")
 def verify():
@@ -528,6 +576,20 @@ def process_webhook(data):
             #Actas de Consejo
             send_text(phone_number_id, from_wa, R_actconsejo)
             send_back_concar(phone_number_id, from_wa)
+
+        # ===== OPCIONES DE TRABAJO DE GRADO =====
+        elif body == "op_modgrado":
+            #Actas de Consejo
+            send_text(phone_number_id, from_wa, R_modgrado)
+            send_back_tragrado(phone_number_id, from_wa)
+        elif body == "op_seggrado":
+            #Actas de Consejo
+            send_text(phone_number_id, from_wa, R_seggrado)
+            send_back_tragrado(phone_number_id, from_wa)
+        elif body == "op_formriud":
+            #Actas de Consejo
+            send_text(phone_number_id, from_wa, R_formriud)
+            send_back_tragrado(phone_number_id, from_wa)
 
 
         
