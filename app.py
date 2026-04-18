@@ -255,7 +255,7 @@ def send_menu_concar(phone_number_id: str, to: str):
         header=None,
         body_text="*Consejo de Carrera*\nEn esta sección encontrarás:\n\n*• Trabajo de grado:* Modalidades de grado\n\n*• Información procesos proyecto de grado*\n\n*• Formulario del RIUD*\n\n Seleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_tragrado",   "title": "Trabajo de grado"}},
+            {"type": "reply", "reply": {"id": "menu_tragrado",   "title": "Trabajo de grado"}},
             {"type": "reply", "reply": {"id": "op_homo",   "title": "Homologaciones"}},
             {"type": "reply", "reply": {"id": "op_actconsejo","title": "Actas de Consejo"}}
         ],
@@ -273,7 +273,7 @@ def send_menu_concar(phone_number_id: str, to: str):
     )
 
 # ========= SUBMENÚ TRABAJO DE GRADO ==========
-def send_menu_concar(phone_number_id: str, to: str):
+def send_menu_tragrado(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
@@ -505,6 +505,9 @@ def process_webhook(data):
     
         elif body == "menu_concar":
             send_menu_concar(phone_number_id, from_wa)
+
+        elif body == "menu_tragrado":
+            send_menu_tragrado(phone_number_id, from_wa)
         
         # ===== OPCIONES DE TRÁMITES =====
         elif body == "op_derechos":
