@@ -277,7 +277,7 @@ def send_menu_tragrado(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Consejo de Carrera*\nEn esta sección encontrarás:\n\n*• Trabajo de grado:* Modalidades de grado\n\n*• Información procesos proyecto de grado*\n\n*• Formulario del RIUD*\n\n Seleccione una opción:",
+        body_text="*Trabajo de grado*\nEn esta sección encontrarás:\n\n*• Modalidades de grado*\n\n*• Seguimiento proyecto de grado*\n\n*• Formulario del RIUD*\n\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "op_modgrado",   "title": "Modalidades grado"}},
             {"type": "reply", "reply": {"id": "op_seggrado",   "title": "Seguimiento grado"}},
