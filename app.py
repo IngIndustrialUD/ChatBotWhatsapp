@@ -320,8 +320,9 @@ LINK_SECACADEMICA = "asecing@udistrital.edu.co"
 LINK_LABS = "https://facingenieria.udistrital.edu.co/laboratorios/labing/index.php/tramites-y-servicios/paz-y-salvo"
 LINK_BIBLIO     = "https://bibliotecas.udistrital.edu.co/servicios/paz_y_salvos"
 LINK_BIENESTAR  = "https://bienestar.udistrital.edu.co/node/634"
-
-
+LINK_HOMO = "https://www.udistrital.edu.co/admisiones/index.php/instructivo/transferencias/consideraciones-generales"
+LINK_ACUERDOHOMO = "https://sgral.udistrital.edu.co/xdata/ca/acu_2018-04.pdf"
+LINK_ACTASCONSEJO = "https://udistritaleduco-my.sharepoint.com/personal/ingindustrial_udistrital_edu_co/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fingindustrial%5Fudistrital%5Fedu%5Fco%2FDocuments%2FActas%20Consejo%20de%20Carrera%20Ing%2E%20Industrial&ga=1"
 
 
 LINK_RIUD       = "https://repositorio.udistrital.edu.co"
@@ -411,11 +412,20 @@ R_tragrado = (
 )
 
 R_homo = (
-    "En proceso, muy amable"
+    "La información referente a transferencias internas, transferencias externas,"
+    "y homologaciones puede encontrarse en el siguiente enlace:"
+    f"{LINK_HOMO}\n\n"
+    "• Es responsabilidad del *estudiante* que solicita la homologación entregar los"
+    "contenidos temáticos de las asignaturas o espacios académicos objeto de homologación"
+    "• Solo podrán ser objeto de posibles homologaciones los espacios académicos (asignaturas)"
+    "*cursados y aprobados* con nota igual o superior a 3.5 sobre 5.0, o su equivalente en"
+    "una escala diferente\n\nEnlace del *Acuerdo N°04, octubre 16 de 2018:*"
+    f"{LINK_ACUERDOHOMO}"
 )
 
 R_actconsejo = (
-    "En proceso, muy amable"
+    "En el siguiente enlace puedes encontrar la publicación de las actas de consejo:"
+    f"{LINK_ACTASCONSEJO}"
 )
 
 R_modgrado = (
