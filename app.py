@@ -323,6 +323,7 @@ LINK_BIENESTAR  = "https://bienestar.udistrital.edu.co/node/634"
 LINK_HOMO = "https://www.udistrital.edu.co/admisiones/index.php/instructivo/transferencias/consideraciones-generales"
 LINK_ACUERDOHOMO = "https://sgral.udistrital.edu.co/xdata/ca/acu_2018-04.pdf"
 LINK_ACTASCONSEJO = "https://udistritaleduco-my.sharepoint.com/personal/ingindustrial_udistrital_edu_co/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fingindustrial%5Fudistrital%5Fedu%5Fco%2FDocuments%2FActas%20Consejo%20de%20Carrera%20Ing%2E%20Industrial&ga=1"
+LINK_MODGRADO = "https://aulasvirtuales.udistrital.edu.co/mod/forum/view.php?id=259484"
 
 
 LINK_RIUD       = "https://repositorio.udistrital.edu.co"
@@ -429,7 +430,10 @@ R_actconsejo = (
 )
 
 R_modgrado = (
-    "En proceso, muy amable"
+    "*Modalidades de grado*\n\nSi deseas saber información sobre las modalidades de grado,"
+    f" dirígete al enlace a continuación:{LINK_MODGRADO}"
+    "\n\nEn el debate *'Formatos Presentación Modalidades de Grado'* se encuentra el "
+    "*Acuerdo No.02 de 2023, procedimiento modalidades de grado.pdf* y más información de interés"
 )
 
 R_seggrado = (
