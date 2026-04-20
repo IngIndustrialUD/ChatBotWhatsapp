@@ -324,9 +324,10 @@ LINK_HOMO = "https://www.udistrital.edu.co/admisiones/index.php/instructivo/tran
 LINK_ACUERDOHOMO = "https://sgral.udistrital.edu.co/xdata/ca/acu_2018-04.pdf"
 LINK_ACTASCONSEJO = "https://udistritaleduco-my.sharepoint.com/personal/ingindustrial_udistrital_edu_co/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fingindustrial%5Fudistrital%5Fedu%5Fco%2FDocuments%2FActas%20Consejo%20de%20Carrera%20Ing%2E%20Industrial&ga=1"
 LINK_MODGRADO = "https://aulasvirtuales.udistrital.edu.co/mod/forum/view.php?id=259484"
+LINK_RIUD       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf "
 
 
-LINK_RIUD       = "https://repositorio.udistrital.edu.co"
+
 LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
 TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
@@ -441,7 +442,10 @@ R_seggrado = (
 )
 
 R_formriud = (
-    "En proceso, muy amable"
+    "Permiso para RIUD: diligencia este formulario una vez inscrito en RIUD:\n\n"
+    " - *Enlace formulario pendiente*"
+    " - Guia RIUD (manual):\n"
+    f"{LINK_RIUD}"
 )
 
 # ========= WEBHOOKS =========
