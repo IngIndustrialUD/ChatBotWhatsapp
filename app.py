@@ -451,9 +451,9 @@ R_formriud = (
 
 R_REINTEGRO = (
     "*Reintegro*\n\n"
-    "*1. *Consulta la programación y requisitos del proceso de admisiones:\n"
+    "*1.* Consulta la programación y requisitos del proceso de admisiones:\n"
     f"{LINK_ADMISIONES}"
-    "\n\n*2.*Revisa cuándo se habilita el proceso y los requisitos antes de inscribirte\n\n"
+    "\n\n*2.* Revisa cuándo se habilita el proceso y los requisitos antes de inscribirte\n\n"
     "*3.* Adquiere el *PIN de reintegro* en las fechas indicadas (es necesario para iniciar la inscripción\n\n"
     "*4.* Genera y paga el recibo de inscripción a través del sistema.\n\n"
     "*5.* Completa el formulario en línea.\n\n"
