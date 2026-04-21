@@ -307,13 +307,24 @@ def send_menu_otros(phone_number_id: str, to: str):
         header=None,
         body_text="*Otros*\nSeleccione una opción:",
         buttons=[
-            {"type": "reply", "reply": {"id": "op_otros_1",   "title": "Opción 1"}},
-            {"type": "reply", "reply": {"id": "op_otros_2",   "title": "Opción 2"}},
-            {"type": "reply", "reply": {"id": "menu_principal","title": "⬅️ Menú principal"}}
+            {"type": "reply", "reply": {"id": "op_cergrado",   "title": "Ceremonias de grado"}},
+            {"type": "reply", "reply": {"id": "op_saberpro",   "title": "Inscripción SaberPro"}},
+            {"type": "reply", "reply": {"id": "op_contactos","title": "Contactos"}}
         ],
         footer_text=""
     )
-
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?\n",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_cambioestudios",  "title": "Cambio Plan estudios"}},
+            {"type": "reply", "reply": {"id": "op_cambiodocumento",  "title": "Cambio TI -> CC"}},
+                {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú Principal"}}
+        ],
+        footer_text=""
+    )
+    
 # ========= LINKS =========
 LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
 LINK_SECACADEMICA = "asecing@udistrital.edu.co"
@@ -472,6 +483,26 @@ R_PAZSALVOS = (
     f"• *Laboratorios:* {LINK_LABS}\n"
     f"• *Biblioteca:* {LINK_BIBLIO}\n"
     f"• *Bienestar institucional:* {LINK_BIENESTAR}\n"
+)
+
+R_CERGRADO = (
+    "En proceso, muy amable"
+)
+
+R_SABERPRO = (
+    "En proceso, muy amable"
+)
+
+R_CONTACTOS = (
+    "Puedes comunicarte"
+)
+
+R_CAMBIOESTUDIOS = (
+    "En proceso, muy amable"
+)
+
+R_CAMBIODOCUMENTO = (
+    "En proceso, muy amable"
 )
 
 # ========= WEBHOOKS =========
@@ -641,13 +672,27 @@ def process_webhook(data):
 
         
         # ===== OPCIONES DE OTROS (por completar) =====
-        elif body == "op_otros_1":
-            send_text(phone_number_id, from_wa, "Otros opción 1 — por completar.")
+        elif body == "op_cergrado":
+            send_text(phone_number_id, from_wa, R_CERGRADO)
             send_back_to_menu_principal(phone_number_id, from_wa)
 
-        elif body == "op_otros_2":
-            send_text(phone_number_id, from_wa, "Otros opción 2 — por completar.")
+        elif body == "op_saberpro":
+            send_text(phone_number_id, from_wa, R_SABERPRO)
             send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_contactos":
+            send_text(phone_number_id, from_wa, R_CONTACTOS)
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_cambioestudios":
+            send_text(phone_number_id, from_wa, R_CAMBIOESTUDIOS)
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        elif body == "op_cambiodocumento":
+            send_text(phone_number_id, from_wa, R_CAMBIODOCUMENTO)
+            send_back_to_menu_principal(phone_number_id, from_wa)
+
+        
 
         # ===== DEFAULT =====
         else:
