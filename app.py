@@ -463,7 +463,7 @@ R_REINTEGRO = (
 
 R_CALENDARIO = (
     "A continuación puedes consultar el calendario académico:\n\n"
-    f"*{LINK_CALENDARIO}*
+    f"*{LINK_CALENDARIO}*"
 )
 
 R_PAZSALVOS = (
