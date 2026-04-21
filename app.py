@@ -325,10 +325,10 @@ LINK_ACUERDOHOMO = "https://sgral.udistrital.edu.co/xdata/ca/acu_2018-04.pdf"
 LINK_ACTASCONSEJO = "https://udistritaleduco-my.sharepoint.com/personal/ingindustrial_udistrital_edu_co/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fingindustrial%5Fudistrital%5Fedu%5Fco%2FDocuments%2FActas%20Consejo%20de%20Carrera%20Ing%2E%20Industrial&ga=1"
 LINK_MODGRADO = "https://aulasvirtuales.udistrital.edu.co/mod/forum/view.php?id=259484"
 LINK_RIUD       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf "
-
-
-
 LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
+LINK_RESULTADOS = "https://www.udistrital.edu.co/admisiones/index.php/resultados?"
+LINK_CALENDARIO = "https://www.udistrital.edu.co/nuestra-universidad/informacion-institucional/calendario-academico"
+
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
 TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
 TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
@@ -446,6 +446,31 @@ R_formriud = (
     " - *Enlace formulario pendiente*"
     " - Guia RIUD (manual):\n"
     f"{LINK_RIUD}"
+)
+
+R_REINTEGRO = (
+    "*Reintegro*\n\n"
+    "*1. *Consulta la programación y requisitos del proceso de admisiones:\n"
+    f"{LINK_ADMISIONES}"
+    "\n\n*2.*Revisa cuándo se habilita el proceso y los requisitos antes de inscribirte\n\n"
+    "*3.* Adquiere el *PIN de reintegro* en las fechas indicadas (es necesario para iniciar la inscripción\n\n"
+    "*4. *Genera y paga el recibo de inscripción a través del sistema.\n\n"
+    "*5. *Completa el formulario en línea.\n\n"
+    "*6. *Descarga e imprime el comprobante de inscripción.\n\n"
+    "*7. *Consulta los resultados en:\n"
+    f"{LINK_RESULTADOS}"
+)
+
+R_CALENDARIO = (
+    "A continuación puedes consultar el calendario académico:\n\n"
+    f"*{LINK_CALENDARIO}*
+)
+
+R_PAZSALVOS = (
+    "A continuación encontrarás los Paz y Salvos de laboratorios, biblioteca y bienestar institucional:\n\n"
+    f"• *Laboratorios:* {LINK_LABS}\n"
+    f"• *Biblioteca:* {LINK_BIBLIO}\n"
+    f"• *Bienestar institucional:* {LINK_BIENESTAR}\n"
 )
 
 # ========= WEBHOOKS =========
@@ -567,18 +592,18 @@ def process_webhook(data):
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_reintegro":
-            #Cancelar/Aplazar de semestre 
-            send_text(phone_number_id, from_wa, "Reintegro - Próximamente")
+            #REINTEGRO 
+            send_text(phone_number_id, from_wa, R_REINTEGRO)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_calend":
-            #Cancelar/Aplazar de semestre 
-            send_text(phone_number_id, from_wa, "Calendario académico - Próximamente")
+            #Calendario académico
+            send_text(phone_number_id, from_wa, R_CALENDARIO)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_pazsalvos":
-            #Cancelar/Aplazar de semestre 
-            send_text(phone_number_id, from_wa, "Paz y Salvos - Próximamente")
+            #PAZ Y SALVOS
+            send_text(phone_number_id, from_wa, R_PAZSALVOS)
             send_back_informacion(phone_number_id, from_wa)
 
 
