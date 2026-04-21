@@ -414,6 +414,7 @@ R_tragrado = (
 )
 
 R_homo = (
+    "*Homologaciones*\n\n"
     "La información referente a transferencias internas, transferencias externas,"
     "y homologaciones puede encontrarse en el siguiente enlace:\n"
     f"{LINK_HOMO}\n\n"
