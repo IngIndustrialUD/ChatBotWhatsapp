@@ -326,7 +326,7 @@ LINK_ACTASCONSEJO = "https://udistritaleduco-my.sharepoint.com/personal/ingindus
 LINK_MODGRADO = "https://aulasvirtuales.udistrital.edu.co/mod/forum/view.php?id=259484"
 LINK_RIUD       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf "
 LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
-LINK_RESULTADOS = "https://www.udistrital.edu.co/admisiones/index.php/resultados?"
+LINK_RESULTADOS = "https://www.udistrital.edu.co/admisiones/index.php/resultados"
 LINK_CALENDARIO = "https://www.udistrital.edu.co/nuestra-universidad/informacion-institucional/calendario-academico"
 
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
@@ -454,10 +454,10 @@ R_REINTEGRO = (
     f"{LINK_ADMISIONES}"
     "\n\n*2.*Revisa cuándo se habilita el proceso y los requisitos antes de inscribirte\n\n"
     "*3.* Adquiere el *PIN de reintegro* en las fechas indicadas (es necesario para iniciar la inscripción\n\n"
-    "*4. *Genera y paga el recibo de inscripción a través del sistema.\n\n"
-    "*5. *Completa el formulario en línea.\n\n"
-    "*6. *Descarga e imprime el comprobante de inscripción.\n\n"
-    "*7. *Consulta los resultados en:\n"
+    "*4.* Genera y paga el recibo de inscripción a través del sistema.\n\n"
+    "*5.* Completa el formulario en línea.\n\n"
+    "*6.* Descarga e imprime el comprobante de inscripción.\n\n"
+    "*7.* Consulta los resultados en:\n"
     f"{LINK_RESULTADOS}"
 )
 
