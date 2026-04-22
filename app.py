@@ -480,9 +480,9 @@ R_CALENDARIO = (
 
 R_PAZSALVOS = (
     "A continuación encontrarás los Paz y Salvos de laboratorios, biblioteca y bienestar institucional:\n\n"
-    f"• *Laboratorios:* {LINK_LABS}\n"
-    f"• *Biblioteca:* {LINK_BIBLIO}\n"
-    f"• *Bienestar institucional:* {LINK_BIENESTAR}\n"
+f"• *Laboratorios:* {LINK_LABS}\n\n"
+    f"• *Biblioteca:* {LINK_BIBLIO}\n\n"
+    f"• *Bienestar institucional:* {LINK_BIENESTAR}\n\n"
 )
 
 R_CERGRADO = (
@@ -494,7 +494,17 @@ R_SABERPRO = (
 )
 
 R_CONTACTOS = (
-    "Puedes comunicarte"
+    "Puedes comunicarte con proyecto curricular de Ingenieria Industrial llamando a:\n"
+    "*(+57) 60113239300*\n"
+    "Ext - Coordinador: *1514*\n"
+    "Ext - Secretaría: *1509*\n\n"
+    "O escribiendo por medio de los corresoe electrónicos:\n"
+    "- *secingindustrial@udistrital.edu.co*\n"
+    "- *ingindustrial@udistrital.edu.co*\n\n"
+    "Nos encontramos en la dirección: *Carrera 7 # 40B - 53 Piso 5*\n\n"
+    "Con el siguiente horario:\n"
+    "- *Medios Virtuales:* Lunes a Viernes de 10:00 a.m. - 1:00 p.m. y de 2:00 p.m. - 6:00 p.m.\n"
+    "- *Atención general:* Lunes a Viernes de 08:00 a.m. a 5:00 p.m."
 )
 
 R_CAMBIOESTUDIOS = (
