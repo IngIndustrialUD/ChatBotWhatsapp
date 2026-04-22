@@ -498,7 +498,7 @@ R_CONTACTOS = (
     "*(+57) 60113239300*\n"
     "Ext - Coordinador: *1514*\n"
     "Ext - Secretaría: *1509*\n\n"
-    "O escribiendo por medio de los corresoe electrónicos:\n"
+    "O escribiendo por medio de los correos electrónicos:\n"
     "- *secingindustrial@udistrital.edu.co*\n"
     "- *ingindustrial@udistrital.edu.co*\n\n"
     "Nos encontramos en la dirección: *Carrera 7 # 40B - 53 Piso 5*\n\n"
