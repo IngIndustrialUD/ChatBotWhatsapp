@@ -25,7 +25,7 @@ INFO_CERTESTUDIOSU   = os.getenv("INFO_CERTESTUDIOSU", "")
 INFO_CERTESTUDIOSD   = os.getenv("INFO_CERTESTUDIOSD", "")
 INFO_PASANTIA        = os.getenv("INFO_PASANTIA", "")
 PENSUM = os.getenv("PENSUM", "")
-
+SABERPRO = os.getenv("SABERPRO", "")
 
 # ========= HELPERS =========
 def graph_post(path: str, payload: dict):
@@ -346,7 +346,9 @@ LINK_RESCAMBIO = "https://sgral.udistrital.edu.co/xdata/ca/res_2023-074.pdf"
 LINK_INFOCAMBIO = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/publicacion/informacion-nuevo-plan"
 LINK_PLANESTUDIOS = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/node/637"
 LINK_DATOSSGA = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcMQgTuVxZ_tGj-X185s4oQNUNkNVNU5RUVJRMThRQUFKQ0hDQVQwNjNLWC4u&route=shorturl"
-
+LINK_ICFES = "https://bpms-portal.icfes.gov.co/pqrs"
+LINK_CERGRADO = "https://facingenieria.udistrital.edu.co/facultad/secretaria-academica/procesos-cronogramas/ceremonia-de-grado"
+FORM_SABERPRO = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcNLWaHcsc_lIvTiQtTlPwYtUNTBUQjRLRDdQS0pQOE5XQVo5N0I5U09YRC4u&origin=lprLink&route=shorturl"
 
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
 TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
@@ -409,6 +411,7 @@ R_PRACTICA = (
 )
 
 R_CONTPRO = (
+    "*Contenidos programáticos*\n\n"
     "En el siguiente enlace puedes consultar los contenidos programáticos *(syllabus)* de "
     "cada asignatura del programa.\n\n"
     "Al seleccionar una materia, encontrarás información detallada sobre sus objetivos, temáticas, "
@@ -454,6 +457,7 @@ R_homo = (
 )
 
 R_actconsejo = (
+    "*Actas de consejo*\n\n"
     "En el siguiente enlace puedes encontrar la publicación de las actas de consejo:\n"
     f"{LINK_ACTASCONSEJO}"
 )
@@ -490,11 +494,13 @@ R_REINTEGRO = (
 )
 
 R_CALENDARIO = (
+    "*Calendario académico*\n\n"
     "A continuación puedes consultar el calendario académico:\n\n"
     f"*{LINK_CALENDARIO}*"
 )
 
 R_PAZSALVOS = (
+    "*Paz y Salvos*\n\n"
     "A continuación encontrarás los Paz y Salvos de laboratorios, biblioteca y bienestar institucional:\n\n"
 f"• *Laboratorios:* {LINK_LABS}\n\n"
     f"• *Biblioteca:* {LINK_BIBLIO}\n\n"
@@ -502,14 +508,36 @@ f"• *Laboratorios:* {LINK_LABS}\n\n"
 )
 
 R_CERGRADO = (
-    "En proceso, muy amable"
+    "*Ceremonias de grado*\n\n"
+    "La información referente a ceremonia de grado se podrá encontrar en el siguiente enlace:\n"
+    f"{LINK_CERGRADO}"
+    "\n\nLa información dispuesta en la página está sujeta a *cronograma* de facultad."
 )
 
 R_SABERPRO = (
-    "En proceso, muy amable"
+    "*Examen Saber Pro y T&T*\n\n"
+    "Para realizar la inscripción al examen Saber Pro y T&T debes seguir diligenciar el "
+    "siguiente formulario:\n"
+    f"{FORM_SABERPRO}"
+    "\n\nLuego, se debe tener presente los siguientes pasos: \n\n"
+    "*1.* Recibir usuario y clave temporal enviado por el ICFES al *correo institucional* o"
+    "*correo registrado en Prisma*\n"
+    "*2.* Ingresar al aplicativo y completar la información requerida.\n"
+    "*3.* Generar la referencia de pago del examen en Prisma\n\n"
+    "*Fechas de inscripción:*\n"
+    "*- Pago ordinario:* Desde el 13 de abril al 15 de mayo de 2026\n"
+    "*- Pago extraordinario:* Desde el 19 de mayo al 12 de junio de 2026\n\n"
+    "*Valor examen:*\n"
+    "*- Ordinario:* $126.000"
+    "*- Extraordinario:* $189.000\n\n"
+    "Es responsabilidad del estudiante verificar su estado de pago en Prisma\n\n"
+    "En caso de tener inconvenientes en el proceso de inscripción, dirígete al siguiente enlace:\n"
+    f"{LINK_ICFES}"
+    "\nO dirígete directamente a las oficinas de atención del ICFES"
 )
 
 R_CONTACTOS = (
+    "*Contactos*\n\n"
     "Puedes comunicarte con proyecto curricular de Ingenieria Industrial llamando a:\n"
     "*(+57) 60113239300*\n"
     "Ext - Coordinador: *1514*\n"
@@ -720,6 +748,7 @@ def process_webhook(data):
             send_back_otros(phone_number_id, from_wa)
 
         elif body == "op_saberpro":
+            send_image_with_caption(phone_number_id, from_wa, SABERPRO, "")
             send_text(phone_number_id, from_wa, R_SABERPRO)
             send_back_otros(phone_number_id, from_wa)
 
