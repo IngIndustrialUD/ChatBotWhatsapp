@@ -461,7 +461,7 @@ R_seggrado = (
 )
 
 R_formriud = (
-    "Permiso para RIUD: diligencia este formulario una vez inscrito en RIUD:\n\n"
+    "Permiso para RIUD:\n Diligencia este formulario una vez inscrito en RIUD:\n\n"
     f" - *{RIUD_FORM}*\n\n"
     "Guia RIUD (manual):\n"
     f"{LINK_RIUD}"
