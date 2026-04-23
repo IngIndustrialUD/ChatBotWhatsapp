@@ -344,7 +344,7 @@ LINK_CALENDARIO = "https://www.udistrital.edu.co/nuestra-universidad/informacion
 RIUD_FORM = "https://forms.cloud.microsoft/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcH0jtLlRoRZEhuhTvxVW7PFUMlA2T0NLUllFNDdMVDFYNklMS0M4WlBMOC4u&origin=lprLink&route=shorturl"
 LINK_RESCAMBIO = "https://sgral.udistrital.edu.co/xdata/ca/res_2023-074.pdf"
 LINK_INFOCAMBIO = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/publicacion/informacion-nuevo-plan"
-LINK_PLANESTUDIOS = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/node/637 "
+LINK_PLANESTUDIOS = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/node/637"
 LINK_DATOSSGA = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcMQgTuVxZ_tGj-X185s4oQNUNkNVNU5RUVJRMThRQUFKQ0hDQVQwNjNLWC4u&route=shorturl"
 
 
@@ -519,8 +519,8 @@ R_CAMBIOESTUDIOS = (
     "Puedes consultar el cambio de pensum en el siguiente enlace:\n"
     f"{LINK_PLANESTUDIOS}\n\n"
     "*Al seleccionar cada asignatura, podrás acceder al syllabus correspondiente*\n\n"
-    "También encontrarás *información del nuevo plan de estudios*, incluyendo la *herramienta* "
-    "*en excel* y el *formato de autorización* para el cambio del plan de estudios, en el "
+    "También encontrarás *información del nuevo plan de estudios*, incluyendo la *herramienta en excel* "
+    "y el *formato de autorización* para el cambio del plan de estudios, en el "
     "siguiente enlace:\n"
     f"*{LINK_INFOCAMBIO}*\n\n"
     "Por último, puedes revisar la Resolución No. 074 del 04 de diciembre de 2023, "
