@@ -487,8 +487,8 @@ R_ADCAN = (
     "Por medio del Sistema de Gestión Académica (SGA) los estudiantes podrán *adicionar* y "
     "*cancelar* asignaturas en el horario mencionado anteriormente\n\n"
     "En el caso de cancelar una materia en período extemporáneo, se debe:\n"
-    f"*Enviar* solicitud a consejo de facultad por medio del correo: {CORREO_SECING},\n"
-    "adjuntando información personal y la razón por la cual desea cancelar."
+    f"*Enviar* solicitud a consejo de facultad por medio del correo:\n {CORREO_SECING}\n"
+    "Adjuntando información personal y la razón por la cual desea cancelar."
 )
 
 
