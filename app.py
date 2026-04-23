@@ -221,11 +221,11 @@ def send_menu_informacion(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Cancelar/Aplazar asignaturas*\n\nSeleccione una opción:",
+        body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Adiciones y cancelaciones*\n\nSeleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "menu_concar", "title": "Consejo de Carrera"}},
             {"type": "reply", "reply": {"id": "op_cancelars", "title":  "Cancelar/aplazar S"}},
-            {"type": "reply", "reply": {"id": "op_cancelara","title": "Cancelar/aplazar A"}}
+            {"type": "reply", "reply": {"id": "op_adcan","title": "Adición/Cancelación"}}
         ],
         footer_text=""
     )
@@ -695,9 +695,9 @@ def process_webhook(data):
             send_back_tramites(phone_number_id, from_wa)
 
         # ===== OPCIONES DE INFORMACIÓN (por completar) =====
-        elif body == "op_cancelara":
+        elif body == "op_adcan":
             #Cancelar/Aplazar de asignaturas 
-            send_text(phone_number_id, from_wa, "Cancelar asignatura - Próximamente")
+            send_text(phone_number_id, from_wa, R_ADCAN)
             send_back_informacion(phone_number_id, from_wa)
             
         elif body == "op_cancelars":
