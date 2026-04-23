@@ -408,6 +408,15 @@ R_PRACTICA = (
     "*Práctica empresarial*\n\n"
 )
 
+R_CONTPRO = (
+    "En el siguiente enlace puedes consultar los contenidos programáticos *(syllabus)* de "
+    "cada asignatura del programa.\n\n"
+    "Al seleccionar una materia, encontrarás información detallada sobre sus objetivos, temáticas, "
+    "metodología y criterios de evaluación:\n"
+    f"{LINK_PLANESTUDIOS}"
+)
+
+
 R_cancelars = (
     "*Como cancelar o aplazar semestre*\n\n"
     "Ten en cuenta de que existen 2 momentos diferentes para solicitar o"
@@ -641,7 +650,8 @@ def process_webhook(data):
             send_back_tramites(phone_number_id, from_wa)
 
         elif body == "op_contpro":
-            send_text(phone_number_id, from_wa, "⚙️ Contenidos programáticos — próximamente.")
+            send_image_with_caption(phone_number_id, from_wa, PENSUM, "")
+            send_text(phone_number_id, from_wa, R_CONTPRO)
             send_back_tramites(phone_number_id, from_wa)
 
         # ===== OPCIONES DE INFORMACIÓN (por completar) =====
