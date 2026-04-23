@@ -330,6 +330,7 @@ def send_menu_otros(phone_number_id: str, to: str):
 # ========= LINKS =========
 LINK_DERECHOS   = "https://youtu.be/jbuQmmPCJ2E"
 LINK_SECACADEMICA = "asecing@udistrital.edu.co"
+CORREO_SECING = "secing@udistrital.edu.co"
 LINK_LABS = "https://facingenieria.udistrital.edu.co/laboratorios/labing/index.php/tramites-y-servicios/paz-y-salvo"
 LINK_BIBLIO     = "https://bibliotecas.udistrital.edu.co/servicios/paz_y_salvos"
 LINK_BIENESTAR  = "https://bienestar.udistrital.edu.co/node/634"
@@ -479,6 +480,17 @@ R_formriud = (
     "Guia RIUD (manual):\n"
     f"{LINK_RIUD}"
 )
+
+R_ADCAN = (
+    "*Adiciones y cancelaciones*\n\n"
+    "El proceso de adiciones y cancelaciones estará habilitado hasta el *31 de julio de 2026.*\n\n"
+    "Por medio del Sistema de Gestión Académica (SGA) los estudiantes podrán *adicionar* y "
+    "*cancelar* asignaturas en el horario mencionado anteriormente\n\n"
+    "En el caso de cancelar una materia en período extemporáneo, se debe:\n"
+    f"*Enviar* solicitud a consejo de facultad por medio del correo: {CORREO_SECING},\n"
+    "adjuntando información personal y la razón por la cual desea cancelar."
+)
+
 
 R_REINTEGRO = (
     "*Reintegro*\n\n"
