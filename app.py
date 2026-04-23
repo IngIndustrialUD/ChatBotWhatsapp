@@ -339,12 +339,14 @@ LINK_RIUD       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_
 LINK_ADMISIONES = "https://www.udistrital.edu.co/admisiones/index.php/"
 LINK_RESULTADOS = "https://www.udistrital.edu.co/admisiones/index.php/resultados"
 LINK_CALENDARIO = "https://www.udistrital.edu.co/nuestra-universidad/informacion-institucional/calendario-academico"
+RIUD_FORM = "https://forms.cloud.microsoft/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcH0jtLlRoRZEhuhTvxVW7PFUMlA2T0NLUllFNDdMVDFYNklMS0M4WlBMOC4u&origin=lprLink&route=shorturl"
+LINK_RESCAMBIO = "https://sgral.udistrital.edu.co/xdata/ca/res_2023-074.pdf"
+
 
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
 TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
 TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
 TG_BANNER       = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/EQRfFbhqDKlPsIdKzjKL_HsBkYzq5JBC7PBkqlxDFU0TFQ?e=MXNNwn"
-RIUD_GUIA       = "https://repository.udistrital.edu.co/assets/custom/docs/Guia_RIUD_autor.pdf"
 PE_FORMATO_SOLIC= "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EeGl6EoBDpJNuxKg6PqYJrwBZhx6TYivnL7uRWKco_D_LA?e=ig9DQu"
 PE_CARTA_TUTOR  = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EXp2Pl4gjFBDoIksXo_7_dYBwh8z_V6KO4D466Jr9A6biw?e=DboPOo"
 PE_INFORME      = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/Ea6rADiXua9FjuiE6B0ViGsBJ-Kc217eO1-9e-4LpS0hMw?e=IJ27L3"
@@ -455,8 +457,8 @@ R_seggrado = (
 
 R_formriud = (
     "Permiso para RIUD: diligencia este formulario una vez inscrito en RIUD:\n\n"
-    " - *Enlace formulario pendiente*"
-    " - Guia RIUD (manual):\n"
+    f" - *{RIUD_FORM}*\n\n"
+    "Guia RIUD (manual):\n"
     f"{LINK_RIUD}"
 )
 
