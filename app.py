@@ -149,13 +149,13 @@ def send_back_tragrado(phone_number_id: str, to: str):
 
 
 def send_back_otros(phone_number_id: str, to: str):
-    """Botón doble: volver a Información O ir al Menú principal"""
+    """Botón doble: volver a Otros O ir al Menú principal"""
     return button_message(
         phone_number_id, to,
         header=None,
         body_text="¿Qué deseas hacer ahora?",
         buttons=[
-            {"type": "reply", "reply": {"id": "menu_informacion", "title": "Volver a Otros"}},
+            {"type": "reply", "reply": {"id": "menu_otros", "title": "Volver a Otros"}},
             {"type": "reply", "reply": {"id": "menu_principal", "title": "Menú principal"}}
         ],
         footer_text=""
@@ -707,24 +707,24 @@ def process_webhook(data):
         # ===== OPCIONES DE OTROS (por completar) =====
         elif body == "op_cergrado":
             send_text(phone_number_id, from_wa, R_CERGRADO)
-            send_back_to_menu_principal(phone_number_id, from_wa)
+            send_back_otros(phone_number_id, from_wa)
 
         elif body == "op_saberpro":
             send_text(phone_number_id, from_wa, R_SABERPRO)
-            send_back_to_menu_principal(phone_number_id, from_wa)
+            send_back_otros(phone_number_id, from_wa)
 
         elif body == "op_contactos":
             send_text(phone_number_id, from_wa, R_CONTACTOS)
-            send_back_to_menu_principal(phone_number_id, from_wa)
+            send_back_otros(phone_number_id, from_wa)
 
         elif body == "op_cambioestudios":
             send_image_with_caption(phone_number_id, from_wa, PENSUM, "")
             send_text(phone_number_id, from_wa, R_CAMBIOESTUDIOS)
-            send_back_to_menu_principal(phone_number_id, from_wa)
+            send_back_otros(phone_number_id, from_wa)
 
         elif body == "op_actualizardatos":
             send_text(phone_number_id, from_wa, R_CAMBIODATOS)
-            send_back_to_menu_principal(phone_number_id, from_wa)
+            send_back_otros(phone_number_id, from_wa)
 
         
 
