@@ -517,7 +517,7 @@ R_CONTACTOS = (
 R_CAMBIOESTUDIOS = (
     "*Cambio de Plan de estudios*\n\n"
     "Puedes consultar el cambio de pensum en el siguiente enlace:\n"
-    f"*{LINK_PLANESTUDIOS}*\n\n"
+    f"{LINK_PLANESTUDIOS}\n\n"
     "*Al seleccionar cada asignatura, podrás acceder al syllabus correspondiente*\n\n"
     "También encontrarás información del nuevo plan de estudios, incluyendo la herramienta "
     "en excel y el formato de autorización para el cambio del plan de estudios, en el "
