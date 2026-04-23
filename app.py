@@ -321,7 +321,7 @@ def send_menu_otros(phone_number_id: str, to: str):
         body_text="¿Qué deseas hacer ahora?\n",
         buttons=[
             {"type": "reply", "reply": {"id": "op_cambioestudios",  "title": "Cambio Plan estudios"}},
-            {"type": "reply", "reply": {"id": "op_cambiodocumento",  "title": "Cambio TI -> CC"}},
+            {"type": "reply", "reply": {"id": "op_actualizardatos",  "title": "Actualizar datos"}},
                 {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú Principal"}}
         ],
         footer_text=""
@@ -343,6 +343,9 @@ LINK_RESULTADOS = "https://www.udistrital.edu.co/admisiones/index.php/resultados
 LINK_CALENDARIO = "https://www.udistrital.edu.co/nuestra-universidad/informacion-institucional/calendario-academico"
 RIUD_FORM = "https://forms.cloud.microsoft/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcH0jtLlRoRZEhuhTvxVW7PFUMlA2T0NLUllFNDdMVDFYNklMS0M4WlBMOC4u&origin=lprLink&route=shorturl"
 LINK_RESCAMBIO = "https://sgral.udistrital.edu.co/xdata/ca/res_2023-074.pdf"
+LINK_INFOCAMBIO = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/publicacion/informacion-nuevo-plan"
+LINK_PLANESTUDIOS = "https://facingenieria.udistrital.edu.co/ingindustrial/index.php/node/637 "
+LINK_DATOSSGA = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcMQgTuVxZ_tGj-X185s4oQNUNkNVNU5RUVJRMThRQUFKQ0hDQVQwNjNLWC4u&route=shorturl"
 
 
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
@@ -512,11 +515,27 @@ R_CONTACTOS = (
 )
 
 R_CAMBIOESTUDIOS = (
-    "En proceso, muy amable"
+    "*Cambio de Plan de estudios*\n\n"
+    "Puedes consultar el cambio de pensum en el siguiente enlace:\n"
+    f"*{LINK_PLANESTUDIOS}*\n\n"
+    "*Al seleccionar cada asignatura, podrás acceder al syllabus correspondiente\n\n"
+    "También encontrarás información del nuevo plan de estudios, incluyendo la herramienta "
+    "en excel y el formato de autorización para el cambio del plan de estudios, en el "
+    "siguiente enlace:\n"
+    f"*{LINK_INFOCAMBIO}*\n\n"
+    "Por último, puedes revisar la Resolución No. 074 del 04 de diciembre de 2023, "
+    "relacionada con el cambio de pensum, aquí: \n"
+    f"*{LINK_RESCAMBIO}*"
 )
 
-R_CAMBIODOCUMENTO = (
-    "En proceso, muy amable"
+R_CAMBIODATOS = (
+    "*Actualizar información personal*\n\n"
+    "Para actualizar tu nombre, tipo de documento o número de identificación, debes "
+    "diligenciar el siguiente formulario:\n"
+    f"*{LINK_DATOSSGA}*\n\n"
+    "También puedes acceder a este formulario a través del Sistema de Gestión Académica, "
+    "en la ruta:\n\n"
+    "*Datos personales → Actualizar datos*"
 )
 
 # ========= WEBHOOKS =========
@@ -699,11 +718,12 @@ def process_webhook(data):
             send_back_to_menu_principal(phone_number_id, from_wa)
 
         elif body == "op_cambioestudios":
+            send_image_with_caption(phone_number_id, from_wa, PENSUM, "")
             send_text(phone_number_id, from_wa, R_CAMBIOESTUDIOS)
             send_back_to_menu_principal(phone_number_id, from_wa)
 
-        elif body == "op_cambiodocumento":
-            send_text(phone_number_id, from_wa, R_CAMBIODOCUMENTO)
+        elif body == "op_actualizardatos":
+            send_text(phone_number_id, from_wa, R_CAMBIODATOS)
             send_back_to_menu_principal(phone_number_id, from_wa)
 
         
