@@ -24,6 +24,8 @@ INFO_DERECHOS        = os.getenv("INFO_DERECHOS", "")
 INFO_CERTESTUDIOSU   = os.getenv("INFO_CERTESTUDIOSU", "")
 INFO_CERTESTUDIOSD   = os.getenv("INFO_CERTESTUDIOSD", "")
 INFO_PASANTIA        = os.getenv("INFO_PASANTIA", "")
+PENSUM = os.getenv("PENSUM", "")
+
 
 # ========= HELPERS =========
 def graph_post(path: str, payload: dict):
