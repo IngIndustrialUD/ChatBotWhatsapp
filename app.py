@@ -753,7 +753,7 @@ def process_webhook(data):
             send_back_tragrado(phone_number_id, from_wa)
         elif body == "op_seggrado":
             #Actas de Consejo
-            'send_image_with_caption(phone_number_id, from_wa, BANNERGABRIELA, "")
+            #send_image_with_caption(phone_number_id, from_wa, BANNERGABRIELA, "")
             send_text(phone_number_id, from_wa, R_seggrado)
             send_back_tragrado(phone_number_id, from_wa)
         elif body == "op_formriud":
