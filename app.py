@@ -351,6 +351,7 @@ LINK_ICFES = "https://bpms-portal.icfes.gov.co/pqrs"
 LINK_CERGRADO = "https://facingenieria.udistrital.edu.co/facultad/secretaria-academica/procesos-cronogramas/ceremonia-de-grado"
 FORM_SABERPRO = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcNLWaHcsc_lIvTiQtTlPwYtUNTBUQjRLRDdQS0pQOE5XQVo5N0I5U09YRC4u&origin=lprLink&route=shorturl"
 
+
 TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
 TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
 TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
@@ -471,7 +472,14 @@ R_modgrado = (
 )
 
 R_seggrado = (
-    "En proceso, muy amable"
+    "*Seguimiento proyecto de grado*\n\n"
+    "A continuación encontrarás el formulario para registrar formalmente tu trabajo de "
+    "grado y solicitar la asignación de un docente jurado, lo que permite dar inicio al "
+    "proceso académico y cumplir con los requisitos establecidos.\n\n"
+    "*Si tu modalidad es pasantía, ten en cuenta de que debes realizar el trámite directamente con la oficina de pasantías*\n\n"
+    "También puedes consultar información adicional en el siguiente enlace:\n"
+    f"{LINK_MODGRADO}\n"
+    "En la ruta: *Pregrados -> Facultad de ingeniería -> Ingeniería Industrial -> Área administrativa -> Ingeniería Industrial -> Información Trabajo de Grado*"
 )
 
 R_formriud = (
@@ -745,6 +753,7 @@ def process_webhook(data):
             send_back_tragrado(phone_number_id, from_wa)
         elif body == "op_seggrado":
             #Actas de Consejo
+            'send_image_with_caption(phone_number_id, from_wa, BANNERGABRIELA, "")
             send_text(phone_number_id, from_wa, R_seggrado)
             send_back_tragrado(phone_number_id, from_wa)
         elif body == "op_formriud":
