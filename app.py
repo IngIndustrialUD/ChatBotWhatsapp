@@ -471,11 +471,13 @@ R_seggrado = (
     "*Seguimiento proyecto de grado*\n\n"
     "A continuación encontrarás el formulario para registrar formalmente tu trabajo de "
     "grado y solicitar la asignación de un docente jurado, lo que permite dar inicio al "
-    "proceso académico y cumplir con los requisitos establecidos.\n\n"
+    "proceso académico y cumplir con los requisitos establecidos:\n"
+    f"{FORM_GRADO}\n\n"
     "*Si tu modalidad es pasantía, ten en cuenta de que debes realizar el trámite directamente con la oficina de pasantías*\n\n"
     "También puedes consultar información adicional en el siguiente enlace:\n"
     f"{LINK_MODGRADO}\n"
     "En la ruta: *Pregrados -> Facultad de ingeniería -> Ingeniería Industrial -> Área administrativa -> Ingeniería Industrial -> Información Trabajo de Grado*"
+    
 )
 
 R_formriud = (
