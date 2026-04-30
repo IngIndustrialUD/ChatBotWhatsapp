@@ -23,7 +23,7 @@ INFO_CERTNOTAS       = os.getenv("INFO_CERTNOTAS", "")
 INFO_DERECHOS        = os.getenv("INFO_DERECHOS", "")
 INFO_CERTESTUDIOSU   = os.getenv("INFO_CERTESTUDIOSU", "")
 INFO_CERTESTUDIOSD   = os.getenv("INFO_CERTESTUDIOSD", "")
-INFO_PASANTIA        = os.getenv("INFO_PASANTIA", "")
+INFO_PRACTICA        = os.getenv("INFO_PRACTICA", "")
 PENSUM = os.getenv("PENSUM", "")
 SABERPRO = os.getenv("SABERPRO", "")
 
@@ -350,15 +350,8 @@ LINK_DATOSSGA = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0O
 LINK_ICFES = "https://bpms-portal.icfes.gov.co/pqrs"
 LINK_CERGRADO = "https://facingenieria.udistrital.edu.co/facultad/secretaria-academica/procesos-cronogramas/ceremonia-de-grado"
 FORM_SABERPRO = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcNLWaHcsc_lIvTiQtTlPwYtUNTBUQjRLRDdQS0pQOE5XQVo5N0I5U09YRC4u&origin=lprLink&route=shorturl"
+FORM_GRADO = "https://forms.office.com/r/nVL5aUuDDA?origin=lprLink"
 
-
-TG_FORM_1       = "https://forms.office.com/r/8ZkpzjTYvX"
-TG_FORM_3       = "https://forms.office.com/r/0r0hjX0Bh4"
-TG_FORM_4       = "https://forms.office.com/r/P81G4Fqt0A"
-TG_BANNER       = "https://udistritaleduco-my.sharepoint.com/:b:/g/personal/ingelectronica_udistrital_edu_co/EQRfFbhqDKlPsIdKzjKL_HsBkYzq5JBC7PBkqlxDFU0TFQ?e=MXNNwn"
-PE_FORMATO_SOLIC= "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EeGl6EoBDpJNuxKg6PqYJrwBZhx6TYivnL7uRWKco_D_LA?e=ig9DQu"
-PE_CARTA_TUTOR  = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/EXp2Pl4gjFBDoIksXo_7_dYBwh8z_V6KO4D466Jr9A6biw?e=DboPOo"
-PE_INFORME      = "https://udistritaleduco-my.sharepoint.com/:w:/g/personal/ingelectronica_udistrital_edu_co/Ea6rADiXua9FjuiE6B0ViGsBJ-Kc217eO1-9e-4LpS0hMw?e=IJ27L3"
 
 # ========= RESPUESTAS =========
 R_DERECHOS = (
@@ -410,6 +403,7 @@ R_CERTEST_2 = (
 
 R_PRACTICA = (
     "*Práctica empresarial*\n\n"
+    ""
 )
 
 R_CONTPRO = (
@@ -441,10 +435,6 @@ R_cancelars = (
     "estudiante tiene máximo dos períodos académicos para solicitar reintegro"
 )
 
-R_tragrado = (
-    "En proceso, muy amable"
-)
-
 R_homo = (
     "*Homologaciones*\n\n"
     "La información referente a transferencias internas, transferencias externas,"
@@ -469,6 +459,8 @@ R_modgrado = (
     f" dirígete al enlace a continuación:{LINK_MODGRADO}"
     "\n\nEn el debate *'Formatos Presentación Modalidades de Grado'* se encuentra el "
     "*Acuerdo No.02 de 2023, procedimiento modalidades de grado.pdf* y más información de interés"
+    "\n\nPara iniciar el proceso, dirígete al siguiente formulario:\n"
+    f"{FORM_GRADO}"
 )
 
 R_seggrado = (
@@ -693,7 +685,7 @@ def process_webhook(data):
             send_back_tramites(phone_number_id, from_wa)
 
         elif body == "op_practica":
-            send_image_with_caption(phone_number_id, from_wa, INFO_PASANTIA, "")
+            send_image_with_caption(phone_number_id, from_wa, INFO_PRACTICA, "")
             send_text(phone_number_id, from_wa, R_PRACTICA)
             send_back_tramites(phone_number_id, from_wa)
 
