@@ -255,7 +255,7 @@ def send_menu_concar(phone_number_id: str, to: str):
     button_message(
         phone_number_id, to,
         header=None,
-        body_text="*Consejo de Carrera*\nEn esta sección encontrarás:\n\n*• Trabajo de grado:* Modalidades de grado\n\n*• Información procesos proyecto de grado*\n\n*• Formulario del RIUD*\n\n Seleccione una opción:",
+        body_text="*Consejo de Carrera*\nEn esta sección encontrarás:\n\n*• Trabajo de grado:* Modalidades de grado, información procesos proyecto de grado, formulario del RIUD\n\n*• Homologaciones*\n\n*• Actas de Consejo*\n\n Seleccione una opción:",
         buttons=[
             {"type": "reply", "reply": {"id": "menu_tragrado",   "title": "Trabajo de grado"}},
             {"type": "reply", "reply": {"id": "op_homo",   "title": "Homologaciones"}},
