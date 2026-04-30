@@ -351,7 +351,8 @@ LINK_ICFES = "https://bpms-portal.icfes.gov.co/pqrs"
 LINK_CERGRADO = "https://facingenieria.udistrital.edu.co/facultad/secretaria-academica/procesos-cronogramas/ceremonia-de-grado"
 FORM_SABERPRO = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcNLWaHcsc_lIvTiQtTlPwYtUNTBUQjRLRDdQS0pQOE5XQVo5N0I5U09YRC4u&origin=lprLink&route=shorturl"
 FORM_GRADO = "https://forms.office.com/r/nVL5aUuDDA?origin=lprLink"
-
+LINK_PRACTICA = "https://aulasvirtuales.udistrital.edu.co/mod/forum/discuss.php?d=62764#p119885"
+FORM_PRACTICA = "https://forms.office.com/pages/responsepage.aspx?id=74gT1bBqY0OflNVmRKRZcH0jtLlRoRZEhuhTvxVW7PFUM1lQVllJTExKVElFR0FZRTA0TDlDRTdKTS4u&origin=lprLink&route=shorturl"
 
 # ========= RESPUESTAS =========
 R_DERECHOS = (
@@ -403,7 +404,10 @@ R_CERTEST_2 = (
 
 R_PRACTICA = (
     "*Práctica empresarial*\n\n"
-    ""
+    "La información acerca de la práctica empresarial puedes encontrarla a continuación:\n"
+    f"{LINK_PRACTICA}"
+    "\n\nPara realizar la solicitud de la *práctica empresarial*, diligencia el siguiente formulario:\n"
+    f"{FORM_PRACTICA}"
 )
 
 R_CONTPRO = (
