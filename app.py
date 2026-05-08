@@ -683,10 +683,15 @@ def broadcast():
 
     for number in contacts:
         try:
-            send_template(
+            #send_template(
+            #    phone_number_id,
+            #    number,
+            #    "hello_world"  
+            #)
+            send_text(
                 phone_number_id,
                 number,
-                "hello_world"  
+                "Mensaje de prueba masivo"
             )
             enviados += 1
         except Exception as e:
