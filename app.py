@@ -1,3 +1,4 @@
+import json
 import os
 import requests
 from urllib.parse import quote_plus
@@ -46,6 +47,36 @@ def send_text(phone_number_id: str, to: str, text: str):
         "type": "text",
         "text": {"body": text}
     })
+
+
+
+
+
+
+
+
+
+def send_template(phone_number_id: str, to: str, template_name: str):
+    return graph_post(f"{phone_number_id}/messages", {
+        "messaging_product": "whatsapp",
+        "to": to,
+        "type": "template",
+        "template": {
+            "name": template_name,
+            "language": {
+                "code": "es"
+            }
+        }
+    })
+
+
+
+
+
+
+
+
+
 
 def send_image_with_caption(phone_number_id: str, to: str, image_url: str, caption: str = ""):
     if not image_url:
@@ -605,7 +636,76 @@ def verify():
 
 processed_ids = set()
 
+
+
+
+CONTACTS_FILE = "contacts.json"
+
+def load_contacts():
+    try:
+        with open(CONTACTS_FILE, "r") as f:
+            return set(json.load(f))
+    except:
+        return set()
+
+def save_contacts(contacts):
+    with open(CONTACTS_FILE, "w") as f:
+        json.dump(list(contacts), f)
+
+contacts = load_contacts()
+
+
+
+
+
+
+
+
+
+
+
 @app.post("/webhook")
+
+
+
+
+
+
+
+
+@app.get("/broadcast")
+def broadcast():
+
+    phone_number_id = os.getenv("PHONE_NUMBER_ID")
+
+    enviados = 0
+
+    for number in contacts:
+        try:
+            send_template(
+                phone_number_id,
+                number,
+                "hola_mundo"  # nombre EXACTO de la plantilla
+            )
+            enviados += 1
+        except Exception as e:
+            print("Error enviando a", number, e)
+
+    return f"Mensajes enviados: {enviados}", 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def webhook():
     data = request.get_json(force=True, silent=True) or {}
     from threading import Thread
@@ -630,6 +730,21 @@ def process_webhook(data):
 
         from_wa = msg["from"]
 
+
+
+
+
+
+
+
+        contacts.add(from_wa)
+        save_contacts(contacts)
+
+
+
+
+
+        
         body = ""
         if msg.get("type") == "text":
             body = msg["text"].get("body", "").strip().lower()
