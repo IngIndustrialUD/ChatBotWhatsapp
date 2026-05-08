@@ -739,7 +739,7 @@ def process_webhook(data):
 
         contacts.add(from_wa)
         save_contacts(contacts)
-
+        print("CONTACTOS ACTUALES:", contacts)
 
 
 
