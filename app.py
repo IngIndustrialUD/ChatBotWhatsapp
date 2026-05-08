@@ -664,7 +664,7 @@ contacts = load_contacts()
 
 
 
-@app.post("/webhook")
+
 
 
 
@@ -685,7 +685,7 @@ def broadcast():
             send_template(
                 phone_number_id,
                 number,
-                "hola_mundo"  # nombre EXACTO de la plantilla
+                "hello_world"  
             )
             enviados += 1
         except Exception as e:
@@ -705,7 +705,7 @@ def broadcast():
 
 
 
-
+@app.post("/webhook")
 def webhook():
     data = request.get_json(force=True, silent=True) or {}
     from threading import Thread
