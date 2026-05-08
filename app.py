@@ -675,7 +675,8 @@ contacts = load_contacts()
 
 @app.get("/broadcast")
 def broadcast():
-
+    print("CONTACTOS EN BROADCAST:", contacts)
+    
     phone_number_id = os.getenv("PHONE_NUMBER_ID")
 
     enviados = 0
