@@ -49,35 +49,39 @@ def send_text(phone_number_id: str, to: str, text: str):
     })
 
 
-
 def send_menu_informacion(phone_number_id: str, to: str):
-    sections = [
-        {
-            "title": "Consejo y Trámites",
-            "rows": [
-                {"id": "menu_concar", "title": "Consejo de Carrera", "description": "Trabajo de grado y actas"},
-                {"id": "op_cancelars", "title": "Aplazar Semestre", "description": "Requisitos y plazos"},
-                {"id": "op_adcan", "title": "Adición / Cancelación", "description": "Modificación de materias"}
-            ]
-        },
-        {
-            "title": "Servicios Generales",
-            "rows": [
-                {"id": "op_reintegro", "title": "Reintegro", "description": "Proceso de reingreso"},
-                {"id": "op_calend", "title": "Calendario Académico", "description": "Fechas del período"},
-                {"id": "op_pazsalvos", "title": "Paz y Salvos", "description": "Laboratorios y biblioteca"}
-            ]
-        }
-    ]
-    
-    list_message(
+    button_message(
         phone_number_id, to,
-        body_text="Selecciona la gestión de información que necesitas realizar:",
-        button_text="Ver opciones",
-        sections=sections,
-        header_text="📚 Menú de Información",
-        footer_text="Universidad Distrital"
+        header=None,
+        body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Adiciones y cancelaciones*\n\nSeleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_concar", "title": "Consejo de Carrera"}},
+            {"type": "reply", "reply": {"id": "op_cancelars", "title":  "Canc./apla. semestre"}},
+            {"type": "reply", "reply": {"id": "op_adcan","title": "Adición/Cancelación"}}
+        ],
+        footer_text=""
     )
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="*Información (2/2)*\nEn esta sección encontrarás:\n\n*• Reintegro*\n\n*• Calendario académico*\n\n*• Paz y salvos*\n\nSeleccione una opción:",
+        buttons=[
+            {"type": "reply", "reply": {"id": "op_reintegro",  "title": "Reintegro"}},
+            {"type": "reply", "reply": {"id": "op_calend",   "title": "Calendario académico"}},
+            {"type": "reply", "reply": {"id": "op_pazsalvos","title": "Paz y Salvos"}}
+        ],
+        footer_text=""
+    )
+    button_message(
+        phone_number_id, to,
+        header=None,
+        body_text="¿Qué deseas hacer ahora?\n",
+        buttons=[
+            {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
+        ],
+        footer_text=""
+    )
+
 
 
 
