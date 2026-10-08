@@ -50,30 +50,34 @@ def send_text(phone_number_id: str, to: str, text: str):
 
 
 
-def list_message(phone_number_id: str, to: str, body_text: str, button_text: str, sections: list, header_text: str = "", footer_text: str = ""):
-    """Envía un menú desplegable de lista con múltiples opciones (hasta 10)"""
-    interactive = {
-        "type": "list",
-        "body": {"text": body_text},
-        "action": {
-            "button": button_text,
-            "sections": sections
+def send_menu_informacion(phone_number_id: str, to: str):
+    sections = [
+        {
+            "title": "Consejo y Trámites",
+            "rows": [
+                {"id": "menu_concar", "title": "Consejo de Carrera", "description": "Trabajo de grado y actas"},
+                {"id": "op_cancelars", "title": "Aplazar Semestre", "description": "Requisitos y plazos"},
+                {"id": "op_adcan", "title": "Adición / Cancelación", "description": "Modificación de materias"}
+            ]
+        },
+        {
+            "title": "Servicios Generales",
+            "rows": [
+                {"id": "op_reintegro", "title": "Reintegro", "description": "Proceso de reingreso"},
+                {"id": "op_calend", "title": "Calendario Académico", "description": "Fechas del período"},
+                {"id": "op_pazsalvos", "title": "Paz y Salvos", "description": "Laboratorios y biblioteca"}
+            ]
         }
-    }
-    if header_text:
-        interactive["header"] = {"type": "text", "text": header_text}
-    if footer_text:
-        interactive["footer"] = {"text": footer_text}
-
-    payload = {
-        "messaging_product": "whatsapp",
-        "to": to,
-        "type": "interactive",
-        "interactive": interactive
-    }
-    return graph_post(f"{phone_number_id}/messages", payload)
-
-
+    ]
+    
+    list_message(
+        phone_number_id, to,
+        body_text="Selecciona la gestión de información que necesitas realizar:",
+        button_text="Ver opciones",
+        sections=sections,
+        header_text="📚 Menú de Información",
+        footer_text="Universidad Distrital"
+    )
 
 
 
