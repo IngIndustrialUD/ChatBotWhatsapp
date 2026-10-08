@@ -265,37 +265,34 @@ def send_menu_tramites(phone_number_id: str, to: str):
     )
 
 # ========= SUBMENÚ INFORMACIÓN (por completar) =========
+
 def send_menu_informacion(phone_number_id: str, to: str):
-    button_message(
+    sections = [
+        {
+            "title": "Consejo de Carrera y Trámites",
+            "rows": [
+                {"id": "menu_concar", "title": "Consejo de Carrera", "description": "Trabajo de grado, homologaciones"},
+                {"id": "op_cancelars", "title": "Canc./apla. semestre", "description": "Requisitos y plazos"},
+                {"id": "op_adcan", "title": "Adición/Cancelación", "description": "Modificación de asignaturas"}
+            ]
+        },
+        {
+            "title": "Servicios Académicos",
+            "rows": [
+                {"id": "op_reintegro", "title": "Reintegro", "description": "Proceso de reingreso al programa"},
+                {"id": "op_calend", "title": "Calendario académico", "description": "Fechas importantes del período"},
+                {"id": "op_pazsalvos", "title": "Paz y Salvos", "description": "Laboratorios, biblioteca y bienestar"}
+            ]
+        }
+    ]
+    
+    list_message(
         phone_number_id, to,
-        header=None,
-        body_text="*Información (1/2)*\nEn esta sección encontrarás:\n\n*• Consejo de Carrera:* Trabajo de grado, homologaciones, actas de consejo.\n\n*• Cancelar/aplazar semestre*\n\n*• Adiciones y cancelaciones*\n\nSeleccione una opción:",
-        buttons=[
-            {"type": "reply", "reply": {"id": "menu_concar", "title": "Consejo de Carrera"}},
-            {"type": "reply", "reply": {"id": "op_cancelars", "title":  "Canc./apla. semestre"}},
-            {"type": "reply", "reply": {"id": "op_adcan","title": "Adición/Cancelación"}}
-        ],
-        footer_text=""
-    )
-    button_message(
-        phone_number_id, to,
-        header=None,
-        body_text="*Información (2/2)*\nEn esta sección encontrarás:\n\n*• Reintegro*\n\n*• Calendario académico*\n\n*• Paz y salvos*\n\nSeleccione una opción:",
-        buttons=[
-            {"type": "reply", "reply": {"id": "op_reintegro",  "title": "Reintegro"}},
-            {"type": "reply", "reply": {"id": "op_calend",   "title": "Calendario académico"}},
-            {"type": "reply", "reply": {"id": "op_pazsalvos","title": "Paz y Salvos"}}
-        ],
-        footer_text=""
-    )
-    button_message(
-        phone_number_id, to,
-        header=None,
-        body_text="¿Qué deseas hacer ahora?\n",
-        buttons=[
-            {"type": "reply", "reply": {"id": "menu_principal",  "title": "Menú principal"}},
-        ],
-        footer_text=""
+        body_text="Selecciona la gestión de información que necesitas realizar:",
+        button_text="Ver opciones",
+        sections=sections,
+        header_text="📚 Menú de Información",
+        footer_text="Universidad Distrital"
     )
 
 # ========= SUBMENÚ CONSEJO DE CARRERA ==========
