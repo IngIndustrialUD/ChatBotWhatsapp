@@ -50,7 +50,28 @@ def send_text(phone_number_id: str, to: str, text: str):
 
 
 
+def list_message(phone_number_id: str, to: str, body_text: str, button_text: str, sections: list, header_text: str = "", footer_text: str = ""):
+    """Envía un menú desplegable de lista con múltiples opciones (hasta 10)"""
+    interactive = {
+        "type": "list",
+        "body": {"text": body_text},
+        "action": {
+            "button": button_text,
+            "sections": sections
+        }
+    }
+    if header_text:
+        interactive["header"] = {"type": "text", "text": header_text}
+    if footer_text:
+        interactive["footer"] = {"text": footer_text}
 
+    payload = {
+        "messaging_product": "whatsapp",
+        "to": to,
+        "type": "interactive",
+        "interactive": interactive
+    }
+    return graph_post(f"{phone_number_id}/messages", payload)
 
 
 
@@ -68,10 +89,6 @@ def send_template(phone_number_id: str, to: str, template_name: str):
             }
         }
     })
-
-
-
-
 
 
 
