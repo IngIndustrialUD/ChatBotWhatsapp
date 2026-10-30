@@ -781,11 +781,17 @@ def process_webhook(data):
             return
         processed_ids.add(msg_id)
 
-        from_wa = msg["from"]
+        from_wa = msg.get("from")
 
+        if not from_wa:
+        print("Evento recibido sin número de remitente.")
+        print("Tipo de mensaje:", msg.get("type"))
+        print("Campos disponibles:", list(msg.keys()))
+        return
 
-
-
+        print("MENSAJE RECIBIDO DE:", from_wa)
+        print("TIPO DE MENSAJE:", msg.get("type"))
+        print("CONTENIDO:", msg.get("text", {}).get("body", "No es texto"))
 
 
 
