@@ -690,11 +690,6 @@ contacts = load_contacts()
 
 
 
-
-
-
-
-
 @app.get("/broadcast")
 def broadcast():
     print("CONTACTOS EN BROADCAST:", contacts)
@@ -742,14 +737,44 @@ def webhook():
 
 def process_webhook(data):
     try:
-        entry           = data["entry"][0]
-        change          = entry["changes"][0]["value"]
-        phone_number_id = change["metadata"]["phone_number_id"]
-        messages        = change.get("messages", [])
-        if not messages:
+        entry_list = data.get("entry", [])
+
+        if not entry_list:
+            print("Webhook sin entradas:", list(data.keys()))
             return
 
-        msg    = messages[0]
+        entry = entry_list[0]
+        changes = entry.get("changes", [])
+
+        if not changes:
+            print("Webhook sin cambios:", list(entry.keys()))
+            return
+
+        change = changes[0].get("value", {})
+
+        metadata = change.get("metadata") or {}
+        phone_number_id = metadata.get("phone_number_id")
+
+        messages = change.get("messages", [])
+
+        # Ignorar eventos que no contienen mensajes entrantes
+        if not messages:
+            print(
+                "Evento sin mensajes. Campos recibidos:",
+                list(change.keys())
+            )
+            return
+
+        # Validar el identificador del número de WhatsApp
+        if not phone_number_id:
+            print("ERROR: No se recibió phone_number_id")
+            print("Campos disponibles:", list(change.keys()))
+            return
+
+        msg = messages[0]
+
+
+        
         msg_id = msg.get("id", "")
         if msg_id in processed_ids:
             print(f"Duplicado ignorado: {msg_id}")
